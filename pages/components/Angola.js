@@ -8,7 +8,12 @@ const formatNumber = (number) => {
   return number; // In case it's not a number
 };
 
-const Angola = ({ data = [] }) => {
+  const Angola = ({ data }) => {
+    // Check if data is defined and is an array
+    if (!Array.isArray(data)) {
+      return <div>No data available</div>;
+    }
+    
   const columns = React.useMemo(
     () => [
       { Header: 'Customer Name', accessor: 'CUSTOMER_NAME' },
@@ -23,10 +28,6 @@ const Angola = ({ data = [] }) => {
   );
 
 
-  // Check if data is defined and is an array
-  if (!Array.isArray(data)) {
-    return <div>No data available</div>;
-  }
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,

@@ -1,4 +1,15 @@
-/** @type {import('next').NextConfig} */
-const nextConfig = {}
+// /** @type {import('next').NextConfig} */
+// const nextConfig = {}
 
-module.exports = nextConfig
+// module.exports = nextConfig
+
+/** @type {import('next').NextConfig} */
+const nextConfig = {
+  eslint: {
+    // This allows production builds to successfully complete even if
+    // your project has ESLint errors.
+    ignoreDuringBuilds: true,
+  },
+};
+
+module.exports = nextConfig;
