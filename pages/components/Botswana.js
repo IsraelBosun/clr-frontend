@@ -33,9 +33,9 @@ const Botswana = ({ data }) => {
         <table {...getTableProps()} className="min-w-full bg-white border border-gray-200 rounded-lg shadow-md">
           <thead>
             {headerGroups.map(headerGroup => (
-              <tr {...headerGroup.getHeaderGroupProps()} className="bg-gray-100 text-gray-600">
+              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id} className="bg-gray-100 text-gray-600">
                 {headerGroup.headers.map(column => (
-                  <th {...column.getHeaderProps()} className="px-4 py-2 border border-gray-300 text-left font-medium">
+                  <th {...column.getHeaderProps()} key={column.id} className="px-4 py-2 border border-gray-300 text-left font-medium">
                     {column.render('Header')}
                   </th>
                 ))}
@@ -46,9 +46,9 @@ const Botswana = ({ data }) => {
             {rows.map(row => {
               prepareRow(row);
               return (
-                <tr {...row.getRowProps()} className="hover:bg-gray-50">
+                <tr {...row.getRowProps()} key={row.id} className="hover:bg-gray-50">
                   {row.cells.map(cell => (
-                    <td {...cell.getCellProps()} className="px-4 py-2 border border-gray-300">
+                    <td {...cell.getCellProps()} key={cell.column.id} className="px-4 py-2 border border-gray-300">
                       {cell.render('Cell')}
                     </td>
                   ))}
