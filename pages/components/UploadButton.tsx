@@ -22,18 +22,16 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ title, url, onDataL
       alert('Please upload a file.');
       return;
     }
-
     setLoading(true);
-
     const formData = new FormData();
     formData.append('file', file);
-
     try {
       const response = await fetch(url, {
         method: 'POST',
         body: formData,
       });
       const result = await response.json();
+      console.log('Upload Response:', result);
       onDataLoaded(result.top5_customers);
     } catch (error) {
       console.error('Error uploading file:', error);

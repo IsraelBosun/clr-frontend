@@ -1,36 +1,25 @@
 import React from 'react';
 import { useTable } from 'react-table';
 
-
 const formatNumber = (number) => {
-  if (typeof number === 'number') {
-    return number.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-  }
-  return number; // In case it's not a number
+  return number.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
 };
 
+const Kenya = ({ data }) => {
+  console.log('Kenya Component Data:', data);
 
-const Botswana = ({ data }) => {
-  // Check if data is defined and is an array
-  if (!Array.isArray(data)) {
-    return <div>No data available</div>;
-  }
-  
   const columns = React.useMemo(
     () => [
-      { Header: 'Customer Name', accessor: 'CUSTOMER_NAME' },
+      { Header: 'Customer Name', accessor: 'CUSTOMER NAME' },
       { Header: 'Sector', accessor: 'SECTOR' },
-      { Header: 'Facility Type', accessor: 'FACILITY_TYPE' },
-      { Header: 'Approved Amount (USD)', accessor: 'APPROVED AMOUNT (USD)', Cell: ({ value }) => formatNumber(value) },
-      { Header: 'Current Exposure (USD)', accessor: 'CURRENT EXPOSURE (USD)', Cell: ({ value }) => formatNumber(value) },
-      { Header: 'Prudential Classification', accessor: 'CLASSIFICATION' },
-      { Header: 'IFRS Classification', accessor: 'IFRS_CLASSIFICATION' },
+      { Header: 'Approved Facility Amount (Limit)', accessor: 'APPROVED TOTAL FACILITY AMOUNT/LIMIT', Cell: ({ value }) => formatNumber(value) },
+      { Header: 'Total Exposures (USD)', accessor: 'TOTAL EXPOSURES(USD)', Cell: ({ value }) => formatNumber(value) },
+      { Header: 'IFRS', accessor: 'IFRS' },
+      { Header: 'Classification', accessor: 'CLASSIFICATION' },
     ],
     []
   );
-  
 
-  
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } = useTable({
     columns,
     data,
@@ -71,4 +60,4 @@ const Botswana = ({ data }) => {
   );
 };
 
-export default Botswana;
+export default Kenya;
