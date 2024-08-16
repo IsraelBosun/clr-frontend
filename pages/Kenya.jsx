@@ -82,20 +82,21 @@ const KenyaScreen = () => {
       console.log("Chart reference not found."); // Debugging line
     }
   };
-
+// sm:flex gap-5 justify-center align-center max-w-xl mt-12
   return (
     <div className = 'bg-white'>
     <div className="min-h-screen max-w-6xl mx-auto flex flex-col items-center justify-center p-4">
     <div className = 'flex items-center justify-center font-bold text-neutral-600 text-5xl'>Kenya's Credit Dashboard</div>
       <div className = 'absolute top-0 right-0 m-5 bg-white shadow-sm rounded-md border p-4 mb-3'>Last updated: {new Date().toLocaleDateString()}</div>
-      <div className="w-full border sm:flex gap-5 justify-center align-center max-w-xl mt-12 ">
+      <div className="flex justify-center align-center items-center ">
       <LineChart
         chartData={kenyaChartData}
         labels={kenyaChartData.map((_, index) => `Week ${index + 1}`)}
         graph={graph}
-        chartTitle="Kenya's Loan Data"
-        className = 'bg-white'
+ //       chartTitle="Kenya's Loan Data"
+        className = 'w-full'
         />
+
         {/* <LineChart
           chartData={kenyaChartData}
           labels={kenyaChartData.map((_, index) => `Week ${index + 1}`)}

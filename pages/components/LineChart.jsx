@@ -67,8 +67,12 @@ const LineChart = ({ chartData = [], labels = [], graph = [], chartTitle = '' })
   };
 
   return (
-    <div className='bg-white shadow-lg rounded-md p-4'>
-      <Line data={data} options={options} />
+    <div className='bg-white w-[600px] mt-2 shadow-lg rounded-md p-4'>
+      <Line
+        data={data}
+        options={options}
+        className = 'hidden'
+        />
     </div>
   );
 };

@@ -87,14 +87,14 @@ const AngolaScreen = () => {
   return (
     <div className = 'bg-white'>
     <div className="min-h-screen max-w-6xl mx-auto flex flex-col items-center justify-center p-4">
-    <div className = 'flex items-center justify-center font-bold text-neutral-600 text-5xl'>Angolas's Credit Dashboard</div>
+    <div className = 'flex items-center justify-center font-bold text-neutral-600 text-5xl'>Angola's Credit Dashboard</div>
       <div className = 'absolute top-0 right-0 m-5 bg-white shadow-sm rounded-md border p-4 mb-3'>Last updated: {new Date().toLocaleDateString()}</div>
-      <div className="w-full border sm:flex gap-5 justify-center align-center max-w-xl mt-12 ">
+      <div className="">
       <LineChart
         chartData={kenyaChartData}
         labels={kenyaChartData.map((_, index) => `Week ${index + 1}`)}
         graph={graph}
-        chartTitle="Angola's Loan Data"
+//        chartTitle="Angola's Loan Data"
         className = 'bg-white'
         />
         {/* <LineChart
