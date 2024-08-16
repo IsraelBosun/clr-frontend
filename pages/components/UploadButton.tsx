@@ -32,7 +32,8 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ title, url, onDataL
       });
       const result = await response.json();
       console.log('Upload Response:', result);
-      onDataLoaded(result.top5_customers);
+      // onDataLoaded(result.top5_customers);
+      onDataLoaded(result);
     } catch (error) {
       console.error('Error uploading file:', error);
     } finally {
