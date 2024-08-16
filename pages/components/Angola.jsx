@@ -6,21 +6,17 @@ const formatNumber = (number) => {
 };
 
 
-const Angola = ({ data }) => {
-  console.log('Angola Component Data:', data);
 
-  // const columns = React.useMemo(
-  //   () => [
-  //     { Header: 'Customer Name', accessor: 'CUSTOMER_NAME' },
-  //     { Header: 'Sector', accessor: 'SECTOR' },
-  //     { Header: 'Approved Facility Amount (Limit)', accessor: 'APPROVED AMOUNT (USD)', Cell: ({ value }) => formatNumber(value) },
-  //     { Header: 'Total Exposures (USD)', accessor: 'OUTSTANDING BALANCE (USD)', Cell: ({ value }) => formatNumber(value) },
-  //     { Header: 'IFRS', accessor: 'IFRS_CLASSIFICATION' },
-  //     { Header: 'Classification', accessor: 'PRUDENTIAL_CLASSIFICATION' },
-  //   ],
-  //   []
-  // );
 
+  const Angola = ({ data }) => {
+    if (!data) {
+      return <div>No data available</div>;
+      console.log('Angola Component Data:', data);
+
+    }
+
+
+  
   const columns = React.useMemo(
     () => [
       { Header: 'Customer Name', accessor: 'CUSTOMER_NAME' },

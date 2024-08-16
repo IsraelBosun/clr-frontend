@@ -23,7 +23,12 @@ const metrics = [
   { label: 'FCY Total', key: 'fcy_total' },
 ];
 
-const KenyaMetrics = ({ data }) => {
+const KenyaMetrics = ({ data = {} }) => {
+  // Ensure data is defined and is an object
+  if (typeof data !== 'object') {
+    return <div>Error: Invalid data format</div>;
+  }
+
   return (
     <div className="p-4">
       <div className="overflow-x-auto">

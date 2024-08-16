@@ -7,7 +7,11 @@ const formatNumber = (number) => {
 
 
 const Kenya = ({ data }) => {
-  console.log('Kenya Component Data:', data);
+  if (!data) {
+    return <div>No data available</div>;
+    console.log('Angola Component Data:', data);
+
+  }
 
   const columns = React.useMemo(
     () => [
