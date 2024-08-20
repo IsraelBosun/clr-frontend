@@ -1,5 +1,7 @@
 // components/FileUploadButton.tsx
 import React, { useState } from 'react';
+import { doc, setDoc } from "firebase/firestore";
+import { db } from '../api/api';
 
 interface FileUploadButtonProps {
   title: string;
@@ -32,7 +34,11 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ title, url, onDataL
       });
       const result = await response.json();
       console.log('Upload Response:', result);
-      // onDataLoaded(result.top5_customers);
+
+      // Store result in Firestore
+      const docRef = doc(db, "kenyaData", new Date().toISOString());
+      await setDoc(docRef, result);
+
       onDataLoaded(result);
     } catch (error) {
       console.error('Error uploading file:', error);
