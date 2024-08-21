@@ -10,7 +10,7 @@ const formatNumber = (number) => {
 
 const KenyaTop5 = ({ data }) => {
   if (!data) {
-    return <div className="p-4">No data available</div>;
+    return <div>No data available</div>;
   }
 
   const columns = React.useMemo(
@@ -31,7 +31,7 @@ const KenyaTop5 = ({ data }) => {
       { Header: "IFRS", accessor: "IFRS" },
       { Header: "Classification", accessor: "CLASSIFICATION" },
     ],
-    [],
+    []
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -45,16 +45,20 @@ const KenyaTop5 = ({ data }) => {
       <div className="overflow-x-auto">
         <table
           {...getTableProps()}
-          className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md divide-y divide-gray-200"
+          className="w-[120%] bg-white border border-gray-300 rounded-lg shadow-lg"
         >
-          <thead className="bg-gray-100 text-gray-600">
+          <thead>
             {headerGroups.map((headerGroup) => (
-              <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
+              <tr
+                {...headerGroup.getHeaderGroupProps()}
+                key={headerGroup.id}
+                className="bg-blue-500 text-white border-b border-gray-300"
+              >
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
                     key={column.id}
-                    className="px-4 py-2 border-b border-gray-300 text-left font-semibold"
+                    className="px-4 py-2 text-left font-semibold text-xs uppercase tracking-wider border-r border-gray-300"
                   >
                     {column.render("Header")}
                   </th>
@@ -69,13 +73,13 @@ const KenyaTop5 = ({ data }) => {
                 <tr
                   {...row.getRowProps()}
                   key={row.id}
-                  className="hover:bg-gray-50"
+                  className="hover:bg-blue-50 even:bg-gray-50 border-b border-gray-300"
                 >
                   {row.cells.map((cell) => (
                     <td
                       {...cell.getCellProps()}
                       key={cell.column.id}
-                      className="px-4 py-2 border-b border-gray-300"
+                      className="px-4 py-2 text-xs text-gray-700 border-r border-gray-300 whitespace-nowrap"
                     >
                       {cell.render("Cell")}
                     </td>

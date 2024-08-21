@@ -8,7 +8,6 @@ const formatNumber = (number) => {
   });
 };
 
-
 const KenyaMissedRepayment = ({ data }) => {
   if (!data) {
     return <div className="p-4">No data available</div>;
@@ -35,7 +34,7 @@ const KenyaMissedRepayment = ({ data }) => {
         Cell: ({ value }) => formatNumber(value),
       },
     ],
-    [],
+    []
   );
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
@@ -44,21 +43,27 @@ const KenyaMissedRepayment = ({ data }) => {
       data: data.map((item, index) => ({ ...item, serialNo: index + 1 })),
     });
 
+  // Function to alternate row colors
+  const getRowClass = (index) => {
+    return index % 2 === 0 ? "bg-gray-50" : "bg-gray-100";
+  };
+
+  
   return (
-    <div className="p-4">
+    <div className="w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4">
       <div className="overflow-x-auto">
         <table
           {...getTableProps()}
-          className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md divide-y divide-gray-200"
+          className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md divide-y divide-gray-300"
         >
-          <thead className="bg-gray-100 text-gray-600">
+          <thead className="bg-blue-600 text-white">
             {headerGroups.map((headerGroup) => (
               <tr {...headerGroup.getHeaderGroupProps()} key={headerGroup.id}>
                 {headerGroup.headers.map((column) => (
                   <th
                     {...column.getHeaderProps()}
                     key={column.id}
-                    className="px-4 py-2 border-b border-gray-300 text-left font-semibold"
+                    className="px-4 py-2 border-r border-gray-300 text-left font-semibold"
                   >
                     {column.render("Header")}
                   </th>
@@ -67,19 +72,19 @@ const KenyaMissedRepayment = ({ data }) => {
             ))}
           </thead>
           <tbody {...getTableBodyProps()}>
-            {rows.map((row) => {
+            {rows.map((row, index) => {
               prepareRow(row);
               return (
                 <tr
                   {...row.getRowProps()}
                   key={row.id}
-                  className="hover:bg-gray-50"
+                  className={`hover:bg-gray-200 ${getRowClass(index)}`}
                 >
                   {row.cells.map((cell) => (
                     <td
                       {...cell.getCellProps()}
                       key={cell.column.id}
-                      className="px-4 py-2 border-b border-gray-300"
+                      className="px-4 py-2 border-r border-gray-300"
                     >
                       {cell.render("Cell")}
                     </td>

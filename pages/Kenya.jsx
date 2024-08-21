@@ -54,23 +54,44 @@ const KenyaScreen = () => {
   }, []);
 
   const handleDataLoaded = async (data) => {
+    // Set all data to state
     setKenyaData(data);
 
+    // Prepare all data for persistence
     const relevantData = {
+      stage1_loans: data.stage1_loans,
       stage2_loans: data.stage2_loans,
       stage3_loans: data.stage3_loans,
+      direct_exposure: data.direct_exposure,
+      contingent_exposure: data.contingent_exposure,
+      total_exposure: data.total_exposure,
+      fcy_direct: data.fcy_direct,
+      fcy_total: data.fcy_total,
       missed_repayments: data.missed_repayments,
+      fcy_direct_percentage: data.fcy_direct_percentage,
+      fcy_total_percentage: data.fcy_total_percentage,
+      percentageof_top5: data.percentageof_top5,
+      percentageof_timeLoan: data.percentageof_timeLoan,
+      percentageof_timeTermLoan: data.percentageof_timeTermLoan,
+      ppl: data.ppl,
+      wpl: data.wpl,
+      npl: data.npl,
+      mrr: data.mrr,
+      top5_customers: data.top5_customers,
+      missed_customers: data.missed_customers,
     };
 
+    // Update chart data with the new relevant data
     const updatedChartData = [...kenyaChartData, relevantData];
     setKenyaChartData(updatedChartData);
 
+    // Save all data to Firestore
     await addDoc(collection(db, "kenyaData"), relevantData);
   };
 
   return (
     <div className="bg-white min-h-screen max-w-6xl mx-auto flex flex-col items-center justify-center p-4">
-      <div className='flex items-center justify-center font-bold text-neutral-600 text-5xl'>
+      <div className='flex items-center text-center justify-center font-bold text-neutral-600 text-5xl'>
         Kenya's Credit Dashboard
       </div>
       <div className='absolute top-0 right-0 m-5 bg-white shadow-sm rounded-md border p-4 mb-3'>
@@ -85,7 +106,7 @@ const KenyaScreen = () => {
           ref={chartRef}
         />
       </div>
-      <div className="flex flex-wrap gap-4 justify-between mt-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
         {metrics.map(({ label, key, isPercentage, isNum }) => (
           <MetricCard
             key={key}
@@ -97,11 +118,11 @@ const KenyaScreen = () => {
           />
         ))}
       </div>
-
-      <div className="flex flex-col items-center mt-8">
+    
+      <div className="flex  flex-col items-center mt-8">
         <button
           onClick={() => setIsTop5Open(!isTop5Open)}
-          className="w-full bg-blue-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center"
+          className="bg-blue-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
         >
           <span className="uppercase font-bold text-xl">Top 5 Obligors</span>
           <svg
@@ -118,13 +139,15 @@ const KenyaScreen = () => {
             />
           </svg>
         </button>
+        <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
         {isTop5Open && kenyaData.top5_customers && (
           <KenyaTop5 data={kenyaData.top5_customers} />
         )}
+        </div>
 
         <button
           onClick={() => setIsMissedRepaymentsOpen(!isMissedRepaymentsOpen)}
-          className="w-full bg-green-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center"
+          className="w-full bg-green-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
         >
           <span className="uppercase font-bold text-xl">Missed Repayments</span>
           <svg
@@ -146,6 +169,7 @@ const KenyaScreen = () => {
         )}
       </div>
 
+      
       <div className="flex flex-col items-center">
         <FileUploadButton
           title="Kenya's CLR Analyser"

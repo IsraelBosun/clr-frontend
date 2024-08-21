@@ -28,6 +28,8 @@ const LineChart = ({ chartData = [], labels = [], graph = [], chartTitle = '' })
   };
 
   const options = {
+    responsive: true,
+    maintainAspectRatio: false,
     scales: {
       x: {
         title: { display: true, text: 'Week' },
@@ -67,12 +69,12 @@ const LineChart = ({ chartData = [], labels = [], graph = [], chartTitle = '' })
   };
 
   return (
-    <div className='bg-white m-7 w-[600px] mt-2 shadow-lg rounded-md p-4'>
+    <div className='bg-white m-7 p-4 shadow-lg rounded-md' style={{ width: '100%', height: '400px' }}>
       <Line
         data={data}
         options={options}
-        className = 'hidden'
-        />
+        style={{ width: '100%', height: '100%' }}
+      />
     </div>
   );
 };
