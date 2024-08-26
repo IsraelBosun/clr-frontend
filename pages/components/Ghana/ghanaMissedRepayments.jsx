@@ -67,9 +67,9 @@ const GhanaMissedRepayment = ({ data }) => {
     XLSX.utils.book_append_sheet(workbook, worksheet, 'Missed Repayments');
     XLSX.writeFile(workbook, 'GhanaMissedRepayment.xlsx');
   };
-
+// sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96
   return (
-    <div className="w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4">
+    <div className="w-full  overflow-x-auto m-4">
       <button
         onClick={downloadExcel}
         className="mb-4 px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600"

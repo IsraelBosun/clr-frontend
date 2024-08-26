@@ -119,7 +119,7 @@ const GhanaScreen = () => {
         ))}
       </div>
 
-    
+
         <button
           onClick={() => setIsTop5Open(!isTop5Open)}
           className="bg-blue-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full overflow-x-auto m-4"
@@ -140,7 +140,7 @@ const GhanaScreen = () => {
           </svg>
   {/* // md:w-1/2 lg:w-3/4 xl:w-full w-96 */}
         </button>
-        <div className='w-full sm:w-96 lg:w-1/2  overflow-x-auto m-4'>
+        <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
         {isTop5Open && ghanaData.top5_customers && (
           <GhanaTop5 data={ghanaData.top5_customers} />
         )}
@@ -219,8 +219,8 @@ const GhanaScreen = () => {
         {isSectorOpen && ghanaData.sector_data && (
           <GhanaSector data={ghanaData.sector_data} />
         )}
-    
-      </div>
+
+        </div>
 
       <div className='mt-8'>
         <FileUploadButton
