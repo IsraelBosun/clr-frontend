@@ -6,6 +6,7 @@ import KenyaTop5 from "./components/Kenya/kenyaTop5.jsx";
 import KenyaMissedRepayment from "./components/Kenya/kenyaMissedRepayments.jsx"
 import MetricCard from './components/MetricCard';
 import LineChart from './components/LineChart';
+// import house from '../public/grid.svg'
 
 const KenyaScreen = () => {
   const [kenyaData, setKenyaData] = useState({});

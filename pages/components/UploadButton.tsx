@@ -47,9 +47,9 @@ const FileUploadButton: React.FC<FileUploadButtonProps> = ({ title, url, onDataL
     }
   };
 
+      // <h1 className="text-2xl font-bold mb-4">{title}</h1>
   return (
-    <div className="mb-8">
-      <h1 className="text-2xl font-bold mb-4">{title}</h1>
+    <div className="mb-8 flex-col items-center justify-center">
       <input
         type="file"
         accept=".xlsx"

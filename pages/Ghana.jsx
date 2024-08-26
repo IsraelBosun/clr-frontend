@@ -40,8 +40,8 @@ const GhanaScreen = () => {
   ];
 
   const graph = [
-    { label: 'stage3_loans', key: 'stage3_loans' },
-    { label: 'missed_repayments', key: 'missed_repayments' },
+    { label: 'npl', key: 'npl' },
+    { label: 'mrr', key: 'mrr' },
   ];
 
   const loadPersistedData = async () => {
@@ -90,11 +90,11 @@ const GhanaScreen = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen max-w-6xl mx-auto flex flex-col items-center justify-center p-4">
-      <div className='flex items-center text-center justify-center font-bold text-neutral-600 text-5xl'>
+    <div className="bg-white min-h-screen max-w-6xl mx-auto mt-4 flex flex-col items-center justify-center p-4">
+      <div className='flex items-center text-center justify-center font-bold text-neutral-600 text-3xl'>
         Ghana's Credit Dashboard
       </div>
-      <div className='absolute top-0 right-0 m-5 bg-white shadow-sm rounded-md border p-4 mb-3'>
+      <div className='absolute top-0 right-0  bg-white text-sm shadow-sm rounded-md border p-2 mb-3'>
         Last updated: {new Date().toLocaleDateString()}
       </div>
       <div className="flex w-full justify-center align-center items-center flex-wrap">

@@ -69,7 +69,7 @@ const LineChart = ({ chartData = [], labels = [], graph = [], chartTitle = '' })
   };
 
   return (
-    <div className='bg-white m-7 p-4 shadow-lg rounded-md' style={{ width: '100%', height: '400px' }}>
+    <div className='bg-white mt-4 shadow-md rounded-lg' style={{ width: '100%', height: '400px' }}>
       <Line
         data={data}
         options={options}

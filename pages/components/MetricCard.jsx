@@ -11,7 +11,7 @@ const MetricCard = ({ title, value, isPercentage, metricKey, isNum }) => {
   };
 
   return (
-    <div className="bg-white shadow-lg border rounded-md p-4 mb-3">
+    <div className="bg-white shadow-md border rounded-md p-4 mb-3">
       <h3 className="text-sm font-semibold text-gray-900 mb-3">{title}</h3>
       <p className={`text-2xl font-bold ${getColor()}`}>
         {value !== null && value !== undefined
