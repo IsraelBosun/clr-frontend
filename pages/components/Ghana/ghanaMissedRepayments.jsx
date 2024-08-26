@@ -1,5 +1,6 @@
 import React from "react";
 import { useTable } from "react-table";
+import * as XLSX from "xlsx";
 
 const formatNumber = (number) => {
   return number.toLocaleString(undefined, {
@@ -8,7 +9,7 @@ const formatNumber = (number) => {
   });
 };
 
-const KenyaMissedRepayment = ({ data }) => {
+const GhanaMissedRepayment = ({ data }) => {
   if (!data) {
     return <div className="p-4">No data available</div>;
   }
@@ -16,21 +17,21 @@ const KenyaMissedRepayment = ({ data }) => {
   const columns = React.useMemo(
     () => [
       { Header: "S/N", accessor: "serialNo" },
-      { Header: "Customer Name", accessor: "CUSTOMER NAME" },
+      { Header: "Customer Name", accessor: "CUSTOMER_NAME" },
       { Header: "Sector", accessor: "SECTOR" },
       {
         Header: "Approved Facility Amount ($)",
-        accessor: "APPROVED TOTAL FACILITY AMOUNT/LIMIT",
+        accessor: "APPROVED AMOUNT (USD)",
         Cell: ({ value }) => formatNumber(value),
       },
       {
         Header: "Total Exposures ($)",
-        accessor: "TOTAL EXPOSURES(USD)",
+        accessor: "OUTSTANDING BALANCE (USD)",
         Cell: ({ value }) => formatNumber(value),
       },
       {
         Header: "Missed Installment ($)",
-        accessor: "MISSED INSTALLMENT",
+        accessor: "UNPAID AMOUNT (USD)",
         Cell: ({ value }) => formatNumber(value),
       },
     ],
@@ -48,9 +49,33 @@ const KenyaMissedRepayment = ({ data }) => {
     return index % 2 === 0 ? "bg-gray-50" : "bg-gray-100";
   };
 
-  
+  // Function to download table data as Excel
+  const downloadExcel = () => {
+    const worksheetData = data.map((row, index) => {
+      return {
+        "S/N": index + 1,
+        "Customer Name": row.CUSTOMER_NAME,
+        "Sector": row.SECTOR,
+        "Approved Facility Amount ($)": row["APPROVED AMOUNT (USD)"],
+        "Total Exposures ($)": row["OUTSTANDING BALANCE (USD)"],
+        "Missed Installment ($)": row["UNPAID AMOUNT (USD)"],
+      };
+    });
+
+    const worksheet = XLSX.utils.json_to_sheet(worksheetData);
+    const workbook = XLSX.utils.book_new();
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Missed Repayments');
+    XLSX.writeFile(workbook, 'GhanaMissedRepayment.xlsx');
+  };
+
   return (
     <div className="w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4">
+      <button
+        onClick={downloadExcel}
+        className="mb-4 px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600"
+      >
+        Download Excel
+      </button>
       <div className="overflow-x-auto">
         <table
           {...getTableProps()}
@@ -99,4 +124,4 @@ const KenyaMissedRepayment = ({ data }) => {
   );
 };
 
-export default KenyaMissedRepayment;
+export default GhanaMissedRepayment;
