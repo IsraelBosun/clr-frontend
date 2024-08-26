@@ -10,15 +10,19 @@ const LineChart = ({ chartData = [], labels = [], graph = [], chartTitle = '' })
   const datasets = graph.map(({ label }, index) => ({
     label,
     data: chartData.map((data) => data[label] || 0),
-    borderColor: index === 0 ? 'rgba(255,99,132,1)' : 'rgba(75,192,192,1)',
-    backgroundColor: index === 0 ? 'rgba(75,192,192,0.2)' : 'rgba(255,99,132,0.2)',
-    borderWidth: 2,
-    tension: 0.3, // Smoothing the lines
-    pointBackgroundColor: 'rgba(0,0,0,0)',
-    pointBorderColor: index === 0 ? 'rgba(75,192,192,1)' : 'rgba(255,99,132,1)',
-    pointBorderWidth: 2,
-    pointRadius: 4,
-    pointHoverRadius: 6,
+    borderColor: index === 0 ? '#FF6384' : '#36A2EB',
+    backgroundColor: index === 0 ? 'rgba(255,99,132,0.2)' : 'rgba(54,162,235,0.2)',
+    borderWidth: 3,
+    tension: 0.4, // Smoothing the lines
+    pointBackgroundColor: '#FFFFFF',
+    pointBorderColor: index === 0 ? '#FF6384' : '#36A2EB',
+    pointBorderWidth: 3,
+    pointRadius: 5,
+    pointHoverRadius: 8,
+    pointHoverBorderWidth: 3,
+    pointHoverBackgroundColor: index === 0 ? '#FF6384' : '#36A2EB',
+    pointHoverBorderColor: '#FFFFFF',
+    fill: true, // Fill area under the line
   }));
 
   // Chart configuration
@@ -32,13 +36,13 @@ const LineChart = ({ chartData = [], labels = [], graph = [], chartTitle = '' })
     maintainAspectRatio: false,
     scales: {
       x: {
-        title: { display: true, text: 'Week' },
-        ticks: { font: { size: 14 }, maxRotation: 45, minRotation: 0, padding: 10 },
+        title: { display: true, text: 'Week', font: { size: 16, weight: 'bold', color: '#333' } },
+        ticks: { font: { size: 14 }, maxRotation: 45, minRotation: 0, padding: 10, color: '#666' },
         grid: { display: true, lineWidth: 1, color: '#e0e0e0' },
       },
       y: {
-        title: { display: true, text: 'Amount' },
-        ticks: { font: { size: 14 }, callback: (value) => value.toLocaleString() },
+        title: { display: true, text: 'Amount', font: { size: 16, weight: 'bold', color: '#333' } },
+        ticks: { font: { size: 14 }, color: '#666', callback: (value) => value.toLocaleString() },
         grid: { display: true, lineWidth: 1, color: '#e0e0e0' },
         beginAtZero: true,
       },
@@ -47,34 +51,54 @@ const LineChart = ({ chartData = [], labels = [], graph = [], chartTitle = '' })
       title: {
         display: !!chartTitle,
         text: chartTitle,
-        font: { size: 16, weight: 'bold' },
-        padding: { top: 10, bottom: 20 },
+        font: { size: 20, weight: 'bold', color: '#444' },
+        padding: { top: 20, bottom: 30 },
       },
       tooltip: {
-        backgroundColor: 'rgba(0,0,0,0.7)',
-        titleFont: { size: 14 },
-        bodyFont: { size: 12 },
+        backgroundColor: 'rgba(0,0,0,0.8)',
+        titleFont: { size: 14, weight: 'bold' },
+        bodyFont: { size: 13 },
+        cornerRadius: 8,
+        padding: 10,
         callbacks: {
           label: (tooltipItem) => `${tooltipItem.dataset.label}: ${tooltipItem.raw.toLocaleString()}`,
         },
+        boxPadding: 5,
       },
       legend: {
-        position: 'top',
+        position: 'bottom',
         labels: {
-          font: { size: 14 },
-          padding: 15,
+          font: { size: 14, color: '#444' },
+          usePointStyle: true,
+          padding: 20,
         },
       },
+    },
+    layout: {
+      padding: {
+        top: 20,
+        bottom: 20,
+        left: 10,
+        right: 10,
+      },
+    },
+    elements: {
+      point: {
+        hoverBorderWidth: 2,
+        hoverRadius: 6,
+        radius: 5,
+        backgroundColor: '#fff',
+      },
+    },
+    animation: {
+      duration: 1500,
+      easing: 'easeInOutQuart',
     },
   };
 
   return (
-    <div className='bg-white mt-4 shadow-md rounded-lg' style={{ width: '100%', height: '400px' }}>
-      <Line
-        data={data}
-        options={options}
-        style={{ width: '100%', height: '100%' }}
-      />
+    <div className='bg-gradient-to-r from-blue-100 to-indigo-200 shadow-lg rounded-lg p-4' style={{ width: '100%', height: '450px' }}>
+      <Line data={data} options={options} style={{ width: '100%', height: '100%' }} />
     </div>
   );
 };

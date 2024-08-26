@@ -227,6 +227,8 @@ const GhanaScreen = () => {
           onDataLoaded={handleDataLoaded}
           countryName='Ghana'
           fileType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+          title="Kenya's CLR Analyser"
+          url="https://clr-1.onrender.com/ghana"
         />
       </div>
     </div>
