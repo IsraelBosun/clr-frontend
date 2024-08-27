@@ -37,8 +37,8 @@ const KenyaScreen = () => {
   ];
 
   const graph = [
-    { label: 'stage3_loans', key: 'stage3_loans' },
-    { label: 'missed_repayments', key: 'missed_repayments' },
+    { label: 'npl', key: 'npl' },
+    { label: 'mrr', key: 'mrr' },
   ];
 
   const loadPersistedData = async () => {
@@ -91,95 +91,149 @@ const KenyaScreen = () => {
   };
 
   return (
-    <div className="bg-white min-h-screen max-w-6xl mx-auto flex flex-col items-center justify-center p-4">
-      <div className='flex items-center text-center justify-center font-bold text-neutral-600 text-5xl'>
-        Kenya's Credit Dashboard
-      </div>
-      <div className='absolute top-0 right-0 m-5 bg-white shadow-sm rounded-md border p-4 mb-3'>
-        Last updated: {new Date().toLocaleDateString()}
-      </div>
-      <div className="flex w-full justify-center align-center items-center flex-wrap">
-        <LineChart
-          chartData={kenyaChartData}
-          labels={kenyaChartData.map((_, index) => `Week ${index + 1}`)}
-          graph={graph}
-          className='w-full'
-          ref={chartRef}
-        />
-      </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
-        {metrics.map(({ label, key, isPercentage, isNum }) => (
-          <MetricCard
-            key={key}
-            title={label}
-            value={kenyaData[key]}
-            isPercentage={isPercentage}
-            metricKey={key}
-            isNum={isNum}
-          />
-        ))}
-      </div>
-    
-      <div className="flex  flex-col items-center mt-8">
-        <button
-          onClick={() => setIsTop5Open(!isTop5Open)}
-          className="bg-blue-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
-        >
-          <span className="uppercase font-bold text-xl">Top 5 Obligors</span>
-          <svg
-            className={`w-6 h-6 transform transition-transform ${isTop5Open ? 'rotate-180' : ''}`}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M6.293 7.293a1 1 0 011.414 0L10 8.586l2.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-        <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
-        {isTop5Open && kenyaData.top5_customers && (
-          <KenyaTop5 data={kenyaData.top5_customers} />
-        )}
-        </div>
+<div className="bg-white min-h-screen max-w-6xl mx-auto mt-4 flex flex-col items-center justify-center p-4">
+  <div className='flex items-center text-center justify-center font-bold text-neutral-600 text-3xl'>
+    Kenya's Credit Dashboard
+  </div>
+  <div className='absolute top-0 right-0  bg-white text-sm shadow-sm rounded-md border p-2 mb-3'>
+    Last updated: {new Date().toLocaleDateString()}
+  </div>
+  <div className="flex w-full justify-center align-center items-center flex-wrap">
+    <LineChart
+      chartData={kenyaChartData}
+      labels={kenyaChartData.map((_, index) => `Week ${index + 1}`)}
+      graph={graph}
+      className='w-full'
+      ref={chartRef}
+    />
+  </div>
+  <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4 mt-8">
+    {metrics.map(({ label, key, isPercentage, isNum }) => (
+      <MetricCard
+        key={key}
+        title={label}
+        value={kenyaData[key]}
+        isPercentage={isPercentage}
+        metricKey={key}
+        isNum={isNum}
+      />
+    ))}
+  </div>
 
-        <button
-          onClick={() => setIsMissedRepaymentsOpen(!isMissedRepaymentsOpen)}
-          className="w-full bg-green-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
-        >
-          <span className="uppercase font-bold text-xl">Missed Repayments</span>
-          <svg
-            className={`w-6 h-6 transform transition-transform ${isMissedRepaymentsOpen ? 'rotate-180' : ''}`}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M6.293 7.293a1 1 0 011.414 0L10 8.586l2.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-        {isMissedRepaymentsOpen && kenyaData.missed_customers && (
-          <KenyaMissedRepayment data={kenyaData.missed_customers} />
-        )}
-      </div>
 
-      
-      <div className="flex flex-col items-center">
-        <FileUploadButton
-          title="Kenya's CLR Analyser"
-          url="https://clr-1.onrender.com/kenya"
-          onDataLoaded={handleDataLoaded}
+    <button
+      onClick={() => setIsTop5Open(!isTop5Open)}
+      className="bg-blue-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full overflow-x-auto m-4"
+    >
+      <span className="uppercase font-bold text-xl">Top 5 Obligors</span>
+      <svg
+        className={`w-6 h-6 transform transition-transform ${isTop5Open ? 'rotate-180' : ''}`}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fillRule="evenodd"
+          d="M6.293 7.293a1 1 0 011.414 0L10 8.586l2.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+          clipRule="evenodd"
         />
-      </div>
+      </svg>
+{/* // md:w-1/2 lg:w-3/4 xl:w-full w-96 */}
+    </button>
+    <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
+    {isTop5Open && kenyaData.top5_customers && (
+      <KenyaTop5 data={kenyaData.top5_customers} />
+    )}
     </div>
-  );
+
+    <button
+      onClick={() => setIsMissedRepaymentsOpen(!isMissedRepaymentsOpen)}
+      className="w-full bg-green-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
+    >
+      <span className="uppercase font-bold text-xl">Missed Repayments</span>
+      <svg
+        className={`w-6 h-6 transform transition-transform ${isMissedRepaymentsOpen ? 'rotate-180' : ''}`}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fillRule="evenodd"
+          d="M6.293 7.293a1 1 0 011.414 0L10 8.586l2.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+          clipRule="evenodd"
+        />
+      </svg>
+    </button>
+    <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
+    {isMissedRepaymentsOpen && kenyaData.missed_customers && (
+      <KenyaMissedRepayment data={kenyaData.missed_customers} />
+    )}
+    </div>
+
+    {/* <button
+      onClick={() => setIsStage2Open(!isStage2Open)}
+      className="w-full bg-yellow-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
+    >
+      <span className="uppercase font-bold text-xl">Top 20 Stage 2</span>
+      <svg
+        className={`w-6 h-6 transform transition-transform ${isStage2Open ? 'rotate-180' : ''}`}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fillRule="evenodd"
+          d="M6.293 7.293a1 1 0 011.414 0L10 8.586l2.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+          clipRule="evenodd"
+        />
+      </svg>
+    </button>
+    <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
+    {isStage2Open && ghanaData.top_20_stage2 && (
+      <AngolaStage2 data={ghanaData.top_20_stage2} />
+    )}
+    </div>
+
+    <button
+      onClick={() => setIsSectorOpen(!isSectorOpen)}
+      className="w-full bg-orange-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
+    >
+      <span className="uppercase font-bold text-xl">Sector Distribution</span>
+      <svg
+        className={`w-6 h-6 transform transition-transform ${isSectorOpen ? 'rotate-180' : ''}`}
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 20 20"
+        fill="currentColor"
+        aria-hidden="true"
+      >
+        <path
+          fillRule="evenodd"
+          d="M6.293 7.293a1 1 0 011.414 0L10 8.586l2.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
+          clipRule="evenodd"
+        />
+      </svg>
+    </button>
+    <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
+    {isSectorOpen && ghanaData.sector_data && (
+      <AngolaSector data={ghanaData.sector_data} />
+    )}
+
+    </div>
+ */}
+  <div className='mt-8'>
+    <FileUploadButton
+      onDataLoaded={handleDataLoaded}
+      countryName='Ghana'
+      fileType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
+      title="Kenya's CLR Analyser"
+      url="https://clr-1.onrender.com/angola"
+    />
+  </div>
+</div>
+);
 };
 
 export default KenyaScreen;
