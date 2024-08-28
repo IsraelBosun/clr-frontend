@@ -140,7 +140,7 @@ const GhanaSector = ({ data }) => {
     <div className="w-full overflow-x-auto m-4">
       <button
         onClick={downloadExcel}
-        className="mb-4 px-4 py-2 bg-green-500 text-white rounded-lg shadow-md hover:bg-green-600"
+        className="mb-4 px-4 py-2 bg-orange-500 text-white rounded-lg shadow-md hover:bg-green-600"
       >
         Download Excel
       </button>

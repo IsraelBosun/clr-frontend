@@ -11,35 +11,39 @@ const formatNumber = (number) => {
 
 // Limits for each sector
 const sectorLimits = {
-  "AGRICULTURE & FISHING": 24.0,
-  "CONSTRUCTION": 9.7,
-  "GENERAL COMMERCE": 27.8,
-  "MANUFACTURING (EXTRATIVE)": 28.4,
-  "MANUFACTURING (PROCESSING)": 30.0,
-  "STAFF": 6.8,
-  "PERSONAL GENERAL": 6.2,
-  "HOTELS & RESTAURANTS": 5.1,
-  "SERVICE": 9.7,
-  "REAL ESTATE": 4.7,
-  "TRANSPORT & LOGISTICS": 4.2,
-  "PUBLIC SECTOR": 8.4,
+  AGRICULTURE: 5.46,
+  GOVERNMENT: 9.60,
+  "COCOA TRADING-Direct": 10.80,
+  "COCOA TRADING-Guarantee Line": 7.52,
+  "CONSTRUCTION & REAL ESTATE": 9.86,
+  CONTRACTORS: 10.45,
+  EDUCATION: 2.63,
+  "FINANCIAL INSTITUTION": 1.20,
+  "GENERAL COMMERCE": 30.00,
+  "INFORMATION & COMMUNICATION": 1.26,
+  MANUFACTURING: 22.30,
+  "OIL & GAS": 3.54,
+  OTHERS: 1.08,
+  "POWER & ENERGY": 4.43,
+  MINING: 1.20,
+  RETAIL: 4.81,
+  SERVICES: 13.74,
+  "TRANSPORTATION & STORAGE": 10.88,
 };
 
-
-const AngolaSector = ({ data }) => {
+const BotswanaSector = ({ data }) => {
   if (!data) {
     return <div className="p-4">No data available</div>;
   }
 
   // Calculate total outstanding balance
-  const totalOutstandingBalance = data.reduce((total, item) => total + item["OUTSTANDING BALANCE \n(USD)"], 0);
+  const totalOutstandingBalance = data.reduce((total, item) => total + item["CURRENT EXPOSURE (USD)"], 0);
 
   // Add percentage, limit, and difference to the data
   const enhancedData = data.map((item, index) => {
-    const percentage = (item["OUTSTANDING BALANCE \n(USD)"] / totalOutstandingBalance) * 100;
-    const normalizedSector = item.SECTOR.trim().toUpperCase(); // Normalize sector name
-    const limit = sectorLimits[normalizedSector] || 0;
-    console.log(limit, 'This is what i printed')
+    const percentage = (item["CURRENT EXPOSURE (USD)"] / totalOutstandingBalance) * 100;
+    const limit = sectorLimits[item.SECTOR] || 0;
+    console.log(limit, 'this is it')
     const difference = limit - percentage;
     return {
       ...item,
@@ -52,7 +56,7 @@ const AngolaSector = ({ data }) => {
 
   // Calculate totals for the last row
   const totalApprovedAmount = data.reduce((sum, item) => sum + item["APPROVED AMOUNT (USD)"], 0);
-  const totalExposure = data.reduce((sum, item) => sum + item["OUTSTANDING BALANCE \n(USD)"], 0);
+  const totalExposure = data.reduce((sum, item) => sum + item["CURRENT EXPOSURE (USD)"], 0);
   const totalPercentage = enhancedData.reduce((sum, item) => sum + parseFloat(item.percentage), 0);
   const totalLimit = enhancedData.reduce((sum, item) => sum + parseFloat(item.limit), 0);
 
@@ -67,7 +71,7 @@ const AngolaSector = ({ data }) => {
       },
       {
         Header: "Total Exposures ($)",
-        accessor: "OUTSTANDING BALANCE \n(USD)",
+        accessor: "CURRENT EXPOSURE (USD)",
         Cell: ({ value }) => formatNumber(value),
       },
       {
@@ -109,7 +113,7 @@ const AngolaSector = ({ data }) => {
       "S/N": index + 1,
       "Sector": row.SECTOR,
       "Approved Facility Amount ($)": row["APPROVED AMOUNT (USD)"],
-      "Total Exposures ($)": row["OUTSTANDING BALANCE \n(USD)"],
+      "Total Exposures ($)": row["CURRENT EXPOSURE (USD)"],
       "Percentage (%)": row.percentage,
       "Limit (%)": row.limit,
       "Difference (%)": row.difference,
@@ -128,8 +132,8 @@ const AngolaSector = ({ data }) => {
 
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Angola Sector');
-    XLSX.writeFile(workbook, 'AngolaSector.xlsx');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Botswana Sector');
+    XLSX.writeFile(workbook, 'BotswanaSector.xlsx');
   };
 
   return (
@@ -198,4 +202,4 @@ const AngolaSector = ({ data }) => {
   );
 };
 
-export default AngolaSector;
+export default BotswanaSector;

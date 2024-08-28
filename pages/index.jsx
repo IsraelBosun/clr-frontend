@@ -15,10 +15,10 @@ const Home = () => {
     { name: "Cameroon", link: "/cameroon" },
     { name: "Tanzania", link: "/tanzania" },
     { name: "Gambia", link: "/gambia" },
-    { name: "Rwanda", link: "/rwanda" },
+    { name: "Rwanda", link: "/Rwanda" },
     { name: "Sierra Leone", link: "/sierra-leone" },
     { name: "DR Congo", link: "/dr-congo" },
-    { name: "Botswana", link: "/botswana" },
+    { name: "Botswana", link: "/Botswana" },
   ];
 
 

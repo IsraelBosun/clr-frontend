@@ -11,35 +11,36 @@ const formatNumber = (number) => {
 
 // Limits for each sector
 const sectorLimits = {
-  "AGRICULTURE & FISHING": 24.0,
-  "CONSTRUCTION": 9.7,
-  "GENERAL COMMERCE": 27.8,
-  "MANUFACTURING (EXTRATIVE)": 28.4,
-  "MANUFACTURING (PROCESSING)": 30.0,
-  "STAFF": 6.8,
-  "PERSONAL GENERAL": 6.2,
-  "HOTELS & RESTAURANTS": 5.1,
-  "SERVICE": 9.7,
-  "REAL ESTATE": 4.7,
-  "TRANSPORT & LOGISTICS": 4.2,
-  "PUBLIC SECTOR": 8.4,
+  "ADMINISTRATIVE AND SUPPORT SERVICES": 2.0,
+  EDUCATION: 2.3,
+  "FINANCE AND INSURANCE": 0.2,
+  GENERAL: 30.0,
+  "GENERAL COMMERCE FMCG": 28.8,
+  GOVERNMENT: 0.0,
+  HOSPITALITY: 2.0,
+  "INFORMATION AND COMMUNICATION": 9.4,
+  LOGISTICS: 8.5,
+  MANUFACTURING: 17.4,
+  "OIL AND GAS": 13.9,
+  "POWER & ENERGY": 6.6,
+  "TRANSPORTATION AND STORAGE": 14.04,
 };
 
 
-const AngolaSector = ({ data }) => {
+const RwandaSector = ({ data }) => {
   if (!data) {
     return <div className="p-4">No data available</div>;
   }
 
   // Calculate total outstanding balance
-  const totalOutstandingBalance = data.reduce((total, item) => total + item["OUTSTANDING BALANCE \n(USD)"], 0);
+  const totalOutstandingBalance = data.reduce((total, item) => total + item["OUTSTANDING BALANCE"], 0);
 
   // Add percentage, limit, and difference to the data
   const enhancedData = data.map((item, index) => {
-    const percentage = (item["OUTSTANDING BALANCE \n(USD)"] / totalOutstandingBalance) * 100;
+    const percentage = (item["OUTSTANDING BALANCE"] / totalOutstandingBalance) * 100;
     const normalizedSector = item.SECTOR.trim().toUpperCase(); // Normalize sector name
     const limit = sectorLimits[normalizedSector] || 0;
-    console.log(limit, 'This is what i printed')
+    console.log(limit, 'this is it')
     const difference = limit - percentage;
     return {
       ...item,
@@ -51,8 +52,8 @@ const AngolaSector = ({ data }) => {
   });
 
   // Calculate totals for the last row
-  const totalApprovedAmount = data.reduce((sum, item) => sum + item["APPROVED AMOUNT (USD)"], 0);
-  const totalExposure = data.reduce((sum, item) => sum + item["OUTSTANDING BALANCE \n(USD)"], 0);
+  const totalApprovedAmount = data.reduce((sum, item) => sum + item["APPROVED AMOUNT"], 0);
+  const totalExposure = data.reduce((sum, item) => sum + item["OUTSTANDING BALANCE"], 0);
   const totalPercentage = enhancedData.reduce((sum, item) => sum + parseFloat(item.percentage), 0);
   const totalLimit = enhancedData.reduce((sum, item) => sum + parseFloat(item.limit), 0);
 
@@ -62,12 +63,12 @@ const AngolaSector = ({ data }) => {
       { Header: "Sector", accessor: "SECTOR" },
       {
         Header: "Approved Facility Amount ($)",
-        accessor: "APPROVED AMOUNT (USD)",
+        accessor: "APPROVED AMOUNT",
         Cell: ({ value }) => formatNumber(value),
       },
       {
         Header: "Total Exposures ($)",
-        accessor: "OUTSTANDING BALANCE \n(USD)",
+        accessor: "OUTSTANDING BALANCE",
         Cell: ({ value }) => formatNumber(value),
       },
       {
@@ -108,8 +109,8 @@ const AngolaSector = ({ data }) => {
     const worksheetData = enhancedData.map((row, index) => ({
       "S/N": index + 1,
       "Sector": row.SECTOR,
-      "Approved Facility Amount ($)": row["APPROVED AMOUNT (USD)"],
-      "Total Exposures ($)": row["OUTSTANDING BALANCE \n(USD)"],
+      "Approved Facility Amount ($)": row["APPROVED AMOUNT"],
+      "Total Exposures ($)": row["OUTSTANDING BALANCE"],
       "Percentage (%)": row.percentage,
       "Limit (%)": row.limit,
       "Difference (%)": row.difference,
@@ -128,8 +129,8 @@ const AngolaSector = ({ data }) => {
 
     const worksheet = XLSX.utils.json_to_sheet(worksheetData);
     const workbook = XLSX.utils.book_new();
-    XLSX.utils.book_append_sheet(workbook, worksheet, 'Angola Sector');
-    XLSX.writeFile(workbook, 'AngolaSector.xlsx');
+    XLSX.utils.book_append_sheet(workbook, worksheet, 'Rwanda Sector');
+    XLSX.writeFile(workbook, 'RwandaSector.xlsx');
   };
 
   return (
@@ -198,4 +199,4 @@ const AngolaSector = ({ data }) => {
   );
 };
 
-export default AngolaSector;
+export default RwandaSector;
