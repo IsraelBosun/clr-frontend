@@ -9,7 +9,7 @@ const Home = () => {
     { name: "Kenya", link: "/Kenya" },
     { name: "Angola", link: "/Angola" },
     { name: "Ghana", link: "/Ghana" },
-    { name: "South Africa", link: "/south-africa" },
+    { name: "South Africa", link: "/SouthAfrica" },
     { name: "Guinea", link: "/Guinea" },
     { name: "Zambia", link: "/zambia" },
     { name: "Cameroon", link: "/cameroon" },
