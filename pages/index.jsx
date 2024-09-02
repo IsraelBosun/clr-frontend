@@ -20,7 +20,7 @@ export default function SignUp() {
     try {
       await signInWithEmailAndPassword(auth, email, password);
       toast.success('Sign In Successful!');  // Display success toast
-      router.push('/Home');
+      router.push('/map');
     } catch (err) {
       setError(err.message);
       toast.error('Incorrect username or password.');  // Display error toast
