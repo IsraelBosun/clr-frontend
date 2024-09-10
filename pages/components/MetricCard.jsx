@@ -10,17 +10,25 @@ const MetricCard = ({ title, value, isPercentage, metricKey, isNum }) => {
     return isPercentage ? 'text-blue-600' : 'text-gray-800';
   };
 
+  // Ensure a value is provided, default to '-' if not
+  const formatValue = () => {
+    if (value === null || value === undefined || isNaN(value)) {
+      return '-';
+    }
+    if (isPercentage) {
+      return `${value.toFixed(2)}%`;
+    }
+    if (isNum) {
+      return `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`;
+    }
+    return value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+  };
+
   return (
     <div className="bg-white shadow-md border rounded-md p-4 mb-3">
       <h3 className="text-sm font-semibold text-gray-900 mb-3">{title}</h3>
       <p className={`text-2xl font-bold ${getColor()}`}>
-        {value !== null && value !== undefined
-          ? isPercentage
-            ? `${value.toFixed(2)}%`
-            : isNum
-              ? `$${value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })}`
-              : value.toLocaleString(undefined, { minimumFractionDigits: 2, maximumFractionDigits: 2 })
-          : '-'}
+        {formatValue()}
       </p>
       <div className="mt-4 flex items-center justify-between text-sm text-gray-500">
         {/* <span>Last updated: {new Date().toLocaleDateString()}</span> */}

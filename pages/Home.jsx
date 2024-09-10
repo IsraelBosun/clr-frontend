@@ -25,7 +25,6 @@ const Home = () => {
 
     return (
       <section className = "mt-4">
-
         <div className="main">
             <div className="gradient" />
         </div>
