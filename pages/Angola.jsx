@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React, { useState, useEffect, useRef } from 'react';
 import FileUploadButton from "./components/UploadButton";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { collection, getDocs, addDoc, setDoc } from "firebase/firestore";
 import { db } from './api/api.jsx';
 import AngolaTop5 from "./components/Angola/angolaTop5";
 import AngolaMissedRepayment from "./components/Angola/angolaMissedRepayments";
@@ -86,7 +86,10 @@ const AngolaScreen = () => {
     const updatedChartData = [...ghanaChartData, relevantData];
     setGhanaChartData(updatedChartData);
 
-    await addDoc(collection(db, "angolaData"), relevantData);
+    const timestamp = Date.now().toString();
+
+
+    await setDoc(doc(db, "angolaData", timestamp), relevantData);
   };
   return (
     <div className="bg-white min-h-screen max-w-6xl mx-auto mt-4 flex flex-col items-center justify-center p-4">

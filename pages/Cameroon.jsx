@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React, { useState, useEffect, useRef } from 'react';
 import FileUploadButton from "./components/UploadButton";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { doc, collection, getDocs, addDoc, setDoc } from "firebase/firestore";
 import { db } from './api/api.jsx';
 import CameroonTop5 from "./components/Cameroon/cameroonTop5";
 import CameroonMissedRepayment from "./components/Cameroon/cameroonMissedRepayments";
@@ -10,6 +10,11 @@ import CameroonSector from "./components/Cameroon/cameroonSector";
 import MetricCard from './components/MetricCard';
 import 'chart.js/auto';
 import LineChart from './components/LineChart';
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
+};
 
 const CameroonScreen = () => {
   const [ghanaData, setGhanaData] = useState({});
@@ -81,12 +86,17 @@ const CameroonScreen = () => {
       sector_data: data.sector_data,
       top_20_stage2: data.top_20_stage2,
       missed_repayments_data: data.missed_repayments_data,
+      timestamp: new Date().toISOString() // Assuming you want to use the current time as timestamp
     };
 
     const updatedChartData = [...ghanaChartData, relevantData];
     setGhanaChartData(updatedChartData);
 
-    await addDoc(collection(db, "cameroonData"), relevantData);
+    const now = new Date();
+    const timestamp = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()}_${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}`;
+    
+
+    await setDoc(doc(db, "cameroonData", timestamp), relevantData);
   };
 
   return (
@@ -100,7 +110,7 @@ const CameroonScreen = () => {
       <div className="flex w-full justify-center align-center items-center flex-wrap">
         <LineChart
           chartData={ghanaChartData}
-          labels={ghanaChartData.map((_, index) => `Week ${index + 1}`)}
+          labels={ghanaChartData.map((data) => formatDate(data.timestamp))}
           graph={graph}
           className='w-full'
           ref={chartRef}
@@ -236,3 +246,7 @@ const CameroonScreen = () => {
 };
 
 export default CameroonScreen;
+
+
+// document id in firebase
+// upload date in chart
