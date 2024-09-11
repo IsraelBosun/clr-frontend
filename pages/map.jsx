@@ -204,6 +204,10 @@ import ghanaGeoJson from '../data/ghanaGeoJson';
 import guineaGeoJson from '../data/guineaGeoJson';
 import southAfricaGeoJson from '../data/southAfricaGeoJson';
 import sierraLeoneGeoJson from '../data/sierraLeoneGeoJson';
+import cameroonGeoJson from '../data/cameroonGeoJson';
+import tanzaniaGeoJson from '../data/tanzaniaGeoJson';
+import zambiaGeoJson from '../data/zambiaGeoJson';
+import mozambiqueGeoJson from '../data/mozambiqueGeoJson';
 
 // Mapbox access token
 mapboxgl.accessToken = 'pk.eyJ1IjoiaXNyYWVsYm9zdW4iLCJhIjoiY20weGh1OGYyMGM2NzJrc2dtc3o5ZXpmOSJ9.CXNN25n8vr2xhAWNcuIuRw';
@@ -220,7 +224,7 @@ const KenyaMap = () => {
         container: mapContainer.current,
         style: 'mapbox://styles/mapbox/streets-v11',
         center: [20, 0], // Initial center of the map
-        zoom: 3,
+        zoom: 2,
       });
 
       // Add zoom and rotation controls
@@ -249,6 +253,10 @@ const KenyaMap = () => {
         { name: 'Guinea', data: guineaGeoJson },
         { name: 'South Africa', data: southAfricaGeoJson },
         { name: 'Sierra Leone', data: sierraLeoneGeoJson },
+        { name: 'Cameroon', data: cameroonGeoJson},
+        { name: 'Tanzania', data: tanzaniaGeoJson},
+        { name: 'Zambia', data: zambiaGeoJson},
+        { name: 'Mozambique', data: mozambiqueGeoJson}
       ];
 
       countriesData.forEach(({ name, data }, index) => {
@@ -312,7 +320,7 @@ const KenyaMap = () => {
 
   return (
     <div className="w-full h-screen">
-      <section className="mt-4">
+      <section className="mt-2">
         <div className="main">
           <div className="gradient" />
         </div>
@@ -327,7 +335,7 @@ const KenyaMap = () => {
           </p>
         </div>
 
-        <div className="flex justify-center items-center h-screen">
+        <div className="flex justify-center mt-6 items-center h-screen">
           {/* Mapbox map container */}
           <div
             ref={mapContainer}

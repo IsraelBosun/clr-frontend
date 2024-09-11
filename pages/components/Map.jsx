@@ -204,7 +204,11 @@ import ghanaGeoJson from '../../data/ghanaGeoJson';
 import guineaGeoJson from '../../data/guineaGeoJson';
 import southAfricaGeoJson from '../../data/southAfricaGeoJson';
 import sierraLeoneGeoJson from '../../data/sierraLeoneGeoJson';
+import tanzaniaGeoJson from '../../data/tanzaniaGeoJson';
+import cameroonGeoJson from '../../data/cameroonGeoJson';
 
+console.log(tanzaniaGeoJson);
+console.log(sierraLeoneGeoJson)
 // Mapbox access token
 mapboxgl.accessToken = 'pk.eyJ1IjoiaXNyYWVsYm9zdW4iLCJhIjoiY20weGh1OGYyMGM2NzJrc2dtc3o5ZXpmOSJ9.CXNN25n8vr2xhAWNcuIuRw';
 
@@ -243,12 +247,14 @@ const KenyaMap = () => {
         { name: 'Rwanda', data: rwandaGeoJson },
         { name: 'Angola', data: angolaGeoJson },
         { name: 'Botswana', data: botswanaGeoJson },
-        { name: 'Congo', data: congoGeoJson },
+        // { name: 'Congo', data: congoGeoJson },
         { name: 'Gambia', data: gambiaGeoJson },
         { name: 'Ghana', data: ghanaGeoJson },
         { name: 'Guinea', data: guineaGeoJson },
         { name: 'South Africa', data: southAfricaGeoJson },
         { name: 'Sierra Leone', data: sierraLeoneGeoJson },
+        { name: 'Tanzania', data: tanzaniaGeoJson},
+        { name: 'Cameroon', data: cameroonGeoJson}
       ];
 
       countriesData.forEach(({ name, data }, index) => {
