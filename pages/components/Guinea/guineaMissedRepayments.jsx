@@ -2,7 +2,11 @@ import React from "react";
 import { useTable } from "react-table";
 import * as XLSX from "xlsx";
 
+// advamced formatter
 const formatNumber = (number) => {
+  if (number === undefined || number === null || isNaN(number)) {
+    return "N/A";  // Return a placeholder for undefined or invalid numbers
+  }
   return number.toLocaleString(undefined, {
     minimumFractionDigits: 2,
     maximumFractionDigits: 2,

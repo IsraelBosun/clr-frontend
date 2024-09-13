@@ -95,7 +95,6 @@ const CongoScreen = () => {
         DR Congo's Risk Dashboard
       </div>
       <div className='absolute top-0 right-0  bg-white text-sm shadow-sm rounded-md border p-2 mb-3'>
-        Last updated: {new Date().toLocaleDateString()}
       </div>
       <div className="flex w-full justify-center align-center items-center flex-wrap">
         <LineChart

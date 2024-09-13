@@ -36,12 +36,12 @@ const LineChart = ({ chartData = [], labels = [], graph = [], chartTitle = '' })
     maintainAspectRatio: false,
     scales: {
       x: {
-        title: { display: true, text: 'Week', font: { size: 16, weight: 'bold', color: '#333' } },
+        title: { display: true, text: 'Day', font: { size: 16, weight: 'bold', color: '#333' } },
         ticks: { font: { size: 14 }, maxRotation: 45, minRotation: 0, padding: 10, color: '#666' },
         grid: { display: true, lineWidth: 1, color: '#e0e0e0' },
       },
       y: {
-        title: { display: true, text: 'Amount', font: { size: 16, weight: 'bold', color: '#333' } },
+        title: { display: true, text: 'Value', font: { size: 16, weight: 'bold', color: '#333' } },
         ticks: { font: { size: 14 }, color: '#666', callback: (value) => value.toLocaleString() },
         grid: { display: true, lineWidth: 1, color: '#e0e0e0' },
         beginAtZero: true,
@@ -97,7 +97,7 @@ const LineChart = ({ chartData = [], labels = [], graph = [], chartTitle = '' })
   };
 
   return (
-    <div className='bg-gradient-to-r from-blue-100 to-indigo-200 shadow-lg rounded-lg p-4' style={{ width: '100%', height: '450px' }}>
+    <div className='bg-gradient-to-r from-blue-100 mt-4 to-indigo-200 shadow-lg rounded-lg p-4' style={{ width: '100%', height: '450px' }}>
       <Line data={data} options={options} style={{ width: '100%', height: '100%' }} />
     </div>
   );

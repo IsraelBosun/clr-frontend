@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React, { useState, useEffect, useRef } from "react";
 import FileUploadButton from "./components/UploadButton";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { doc, collection, getDocs, addDoc, setDoc } from "firebase/firestore";
 import { db } from "./api/api.jsx";
 import GuineaTop5 from "./components/Guinea/guineaTop5";
 import GuineaMissedRepayment from "./components/Guinea/guineaMissedRepayments";
@@ -10,6 +10,11 @@ import GuineaSector from "./components/Guinea/guineaSector";
 import MetricCard from "./components/MetricCard";
 import "chart.js/auto";
 import LineChart from "./components/LineChart";
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
+};
 
 const GuineaScreen = () => {
   const [ghanaData, setGhanaData] = useState({});
@@ -93,6 +98,7 @@ const GuineaScreen = () => {
       sector_data: data.sector_data,
       top_20_stage2: data.top_20_stage2,
       missed_repayments_data: data.missed_repayments_data,
+      timestamp: new Date().toISOString() // Assuming you want to use the current time as timestamp
     };
 
     const updatedChartData = [...ghanaChartData, relevantData];
@@ -107,12 +113,11 @@ const GuineaScreen = () => {
         Guinea's Risk Dashboard
       </div>
       <div className="absolute top-0 mt-2 right-0  bg-white text-sm shadow-sm rounded-md border p-2 mb-3">
-        Last updated: {new Date().toLocaleDateString()}
       </div>
       <div className="flex w-full justify-center align-center items-center flex-wrap mt-5">
         <LineChart
           chartData={ghanaChartData}
-          labels={ghanaChartData.map((_, index) => `Week ${index + 1}`)}
+          labels={ghanaChartData.map((data) => formatDate(data.timestamp))}
           graph={graph}
           className="w-full"
           ref={chartRef}

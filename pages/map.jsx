@@ -217,6 +217,22 @@ const KenyaMap = () => {
   const [map, setMap] = useState(null);
   const router = useRouter();
 
+    const countries = [
+    { name: "Kenya", link: "/Kenya" },
+    { name: "Angola", link: "/Angola" },
+    { name: "Ghana", link: "/Ghana" },
+    { name: "South Africa", link: "/SouthAfrica" },
+    { name: "Guinea", link: "/Guinea" },
+    { name: "Zambia", link: "/Zambia" },
+    { name: "Cameroon", link: "/Cameroon" },
+    { name: "Tanzania", link: "/Tanzania" },
+    { name: "Gambia", link: "/Gambia" },
+    { name: "Rwanda", link: "/Rwanda" },
+    { name: "Sierra Leone", link: "/SierrLeone" },
+    { name: "DR Congo", link: "/Congo" },
+    { name: "Botswana", link: "/Botswana" },
+  ];
+
   useEffect(() => {
     if (mapContainer.current && !map) {
       // Initialize Mapbox map
@@ -334,6 +350,19 @@ const KenyaMap = () => {
             A place to view key metrics for the subsidiaries at any point in time.
           </p>
         </div>
+
+        <div className="grid grid-cols-2 sm:grid-cols-2 md:flex md:flex-wrap justify-center gap-4 p-6">
+  {countries.map((country, index) => (
+    <a
+      key={index}
+      href={country.link}
+      className="w-full sm:w-auto px-4 py-2 rounded-lg text-white font-bold text-lg 
+        bg-green-600 hover:bg-green-700"
+    >
+      {country.name}
+    </a>
+  ))}
+</div>
 
         <div className="flex justify-center mt-6 items-center h-screen">
           {/* Mapbox map container */}

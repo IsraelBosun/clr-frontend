@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useRef } from 'react';
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { doc, collection, getDocs, addDoc, setDoc } from "firebase/firestore";
 import { db } from './api/api.jsx';
 import FileUploadButton from "./components/UploadButton";
 import KenyaTop5 from "./components/Kenya/kenyaTop5.jsx";
@@ -7,6 +7,11 @@ import KenyaMissedRepayment from "./components/Kenya/kenyaMissedRepayments.jsx"
 import MetricCard from './components/MetricCard';
 import LineChart from './components/LineChart';
 // import house from '../public/grid.svg'
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
+};
 
 const KenyaScreen = () => {
   const [kenyaData, setKenyaData] = useState({});
@@ -80,14 +85,19 @@ const KenyaScreen = () => {
       mrr: data.mrr,
       top5_customers: data.top5_customers,
       missed_customers: data.missed_customers,
+      timestamp: new Date().toISOString() // Assuming you want to use the current time as timestamp
     };
 
     // Update chart data with the new relevant data
     const updatedChartData = [...kenyaChartData, relevantData];
     setKenyaChartData(updatedChartData);
 
+    const now = new Date();
+    const timestamp = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()}_${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}`;
+  
+
     // Save all data to Firestore
-    await addDoc(collection(db, "kenyaData"), relevantData);
+    await setDoc(doc(db, "kenyaData", timestamp), relevantData);
   };
 
   return (
@@ -96,12 +106,11 @@ const KenyaScreen = () => {
     Kenya's Credit Dashboard
   </div>
   <div className='absolute top-0 right-0  bg-white text-sm shadow-sm rounded-md border p-2 mb-3'>
-    Last updated: {new Date().toLocaleDateString()}
   </div>
   <div className="flex w-full justify-center align-center items-center flex-wrap">
     <LineChart
       chartData={kenyaChartData}
-      labels={kenyaChartData.map((_, index) => `Week ${index + 1}`)}
+      labels={kenyaChartData.map((data) => formatDate(data.timestamp))}
       graph={graph}
       className='w-full'
       ref={chartRef}

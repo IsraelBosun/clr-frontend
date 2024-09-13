@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React, { useState, useEffect, useRef } from 'react';
 import FileUploadButton from "./components/UploadButton";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { doc, collection, getDocs, addDoc, setDoc} from "firebase/firestore";
 import { db } from './api/api.jsx';
 import MozambiqueTop5 from "./components/Mozambique/mozambiqueTop5";
 import MozambiqueMissedRepayment from "./components/Mozambique/mozambiqueMissedRepayments";
@@ -10,6 +10,12 @@ import MozambiqueSector from "./components/Mozambique/mozambiqueSector";
 import MetricCard from './components/MetricCard';
 import 'chart.js/auto';
 import LineChart from './components/LineChart';
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
+};
+
 
 const MozambiqueScreen = () => {
   const [ghanaData, setGhanaData] = useState({});
@@ -81,12 +87,17 @@ const MozambiqueScreen = () => {
       sector_data: data.sector_data,
       top_20_stage2: data.top_20_stage2,
       // missed_repayments_data: data.missed_repayments_data,
+      timestamp: new Date().toISOString() // Assuming you want to use the current time as timestamp
     };
 
     const updatedChartData = [...ghanaChartData, relevantData];
     setGhanaChartData(updatedChartData);
 
-    await addDoc(collection(db, "mozambiqueData"), relevantData);
+    const now = new Date();
+    const timestamp = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()}_${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}`;
+  
+
+    await setDoc(doc(db, "mozambiqueData", timestamp), relevantData);
   };
 
   return (
@@ -95,12 +106,11 @@ const MozambiqueScreen = () => {
         Mozambique's Credit Dashboard
       </div>
       <div className='absolute top-0 right-0  bg-white text-sm shadow-sm rounded-md border p-2 mb-3'>
-        Last updated: {new Date().toLocaleDateString()}
       </div>
       <div className="flex w-full justify-center align-center items-center flex-wrap">
         <LineChart
           chartData={ghanaChartData}
-          labels={ghanaChartData.map((_, index) => `Week ${index + 1}`)}
+          labels={ghanaChartData.map((data) => formatDate(data.timestamp))}
           graph={graph}
           className='w-full'
           ref={chartRef}
