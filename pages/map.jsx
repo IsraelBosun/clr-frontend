@@ -228,7 +228,7 @@ const KenyaMap = () => {
     { name: "Tanzania", link: "/Tanzania" },
     { name: "Gambia", link: "/Gambia" },
     { name: "Rwanda", link: "/Rwanda" },
-    { name: "Sierra Leone", link: "/SierrLeone" },
+    { name: "Sierra Leone", link: "/SierraLeone" },
     { name: "DR Congo", link: "/Congo" },
     { name: "Botswana", link: "/Botswana" },
   ];
