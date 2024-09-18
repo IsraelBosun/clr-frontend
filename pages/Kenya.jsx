@@ -4,6 +4,7 @@ import { db } from './api/api.jsx';
 import FileUploadButton from "./components/UploadButton";
 import KenyaTop5 from "./components/Kenya/kenyaTop5.jsx";
 import KenyaMissedRepayment from "./components/Kenya/kenyaMissedRepayments.jsx"
+import KenyaStage2 from "./components/Kenya/kenyaStage2.jsx"
 import MetricCard from './components/MetricCard';
 import LineChart from './components/LineChart';
 // import house from '../public/grid.svg'
@@ -17,6 +18,7 @@ const KenyaScreen = () => {
   const [kenyaData, setKenyaData] = useState({});
   const [kenyaChartData, setKenyaChartData] = useState([]);
   const [isTop5Open, setIsTop5Open] = useState(false);
+  const [isStage2Open, setIsStage2Open] = useState(false);
   const [isMissedRepaymentsOpen, setIsMissedRepaymentsOpen] = useState(false);
   const chartRef = useRef(null);
 
@@ -32,9 +34,9 @@ const KenyaScreen = () => {
     { label: 'Missed Repayments', key: 'missed_repayments', isNum: true },
     { label: 'FCY Direct Percentage', key: 'fcy_direct_percentage', isPercentage: true },
     { label: 'FCY Total Percentage', key: 'fcy_total_percentage', isPercentage: true },
-    { label: 'Percentage Of Top 5', key: 'percentageof_top5', isPercentage: true },
-    { label: 'Percentage Of Time Loan', key: 'percentageof_timeLoan', isPercentage: true },
-    { label: `Percentage Of Time & Term Loan`, key: 'percentageof_timeTermLoan', isPercentage: true },
+    { label: 'Percentage Of Top 5', key: 'percentage_of_top5', isPercentage: true },
+    // { label: 'Percentage Of Time Loan', key: 'percentageof_timeLoan', isPercentage: true },
+    // { label: `Percentage Of Time & Term Loan`, key: 'percentageof_timeTermLoan', isPercentage: true },
     { label: 'PPL', key: 'ppl', isPercentage: true },
     { label: 'WPL', key: 'wpl', isPercentage: true },
     { label: 'NPL', key: 'npl', isPercentage: true },
@@ -76,15 +78,14 @@ const KenyaScreen = () => {
       missed_repayments: data.missed_repayments,
       fcy_direct_percentage: data.fcy_direct_percentage,
       fcy_total_percentage: data.fcy_total_percentage,
-      percentageof_top5: data.percentageof_top5,
-      percentageof_timeLoan: data.percentageof_timeLoan,
-      percentageof_timeTermLoan: data.percentageof_timeTermLoan,
+      percentageof_top5: data.percentage_of_top5,
+      // percentageof_timeLoan: data.percentageof_timeLoan,
+      // percentageof_timeTermLoan: data.percentageof_timeTermLoan,
       ppl: data.ppl,
       wpl: data.wpl,
       npl: data.npl,
       mrr: data.mrr,
       top5_customers: data.top5_customers,
-      missed_customers: data.missed_customers,
       timestamp: new Date().toISOString() // Assuming you want to use the current time as timestamp
     };
 
@@ -103,7 +104,7 @@ const KenyaScreen = () => {
   return (
 <div className="bg-white min-h-screen max-w-6xl mx-auto mt-4 flex flex-col items-center justify-center p-4">
   <div className='flex items-center text-center justify-center font-bold text-neutral-600 text-3xl'>
-    Kenya's Credit Dashboard
+    Kenyaaa's Credit Dashboard
   </div>
   <div className='absolute top-0 right-0  bg-white text-sm shadow-sm rounded-md border p-2 mb-3'>
   </div>
@@ -176,12 +177,12 @@ const KenyaScreen = () => {
       </svg>
     </button>
     <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
-    {isMissedRepaymentsOpen && kenyaData.missed_customers && (
-      <KenyaMissedRepayment data={kenyaData.missed_customers} />
+    {isMissedRepaymentsOpen && kenyaData.missed_repayments_data && (
+      <KenyaMissedRepayment data={kenyaData.missed_repayments_data} />
     )}
     </div>
 
-    {/* <button
+    <button
       onClick={() => setIsStage2Open(!isStage2Open)}
       className="w-full bg-yellow-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
     >
@@ -201,12 +202,12 @@ const KenyaScreen = () => {
       </svg>
     </button>
     <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
-    {isStage2Open && ghanaData.top_20_stage2 && (
-      <AngolaStage2 data={ghanaData.top_20_stage2} />
+    {isStage2Open && kenyaData.top_20_stage2 && (
+      <KenyaStage2 data={kenyaData.top_20_stage2} />
     )}
     </div>
 
-    <button
+    {/* <button
       onClick={() => setIsSectorOpen(!isSectorOpen)}
       className="w-full bg-orange-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
     >
@@ -224,21 +225,21 @@ const KenyaScreen = () => {
           clipRule="evenodd"
         />
       </svg>
-    </button>
-    <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
+    </button> */}
+    {/* <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
     {isSectorOpen && ghanaData.sector_data && (
       <AngolaSector data={ghanaData.sector_data} />
     )}
 
-    </div>
- */}
+    </div> */}
+
   <div className='mt-8'>
     <FileUploadButton
       onDataLoaded={handleDataLoaded}
       countryName='Ghana'
       fileType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
       title="Kenya's CLR Analyser"
-      url="https://clr-1.onrender.com/angola"
+      url="https://clr-nyyo.onrender.com/kenya"
     />
   </div>
 </div>

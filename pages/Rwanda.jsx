@@ -238,8 +238,8 @@ const RwandaScreen = () => {
           onDataLoaded={handleDataLoaded}
           countryName='Ghana'
           fileType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
-          title="Kenya's CLR Analyser"
-          url="https://clr-1.onrender.com/rwanda"
+          title="Rwanda's CLR Analyser"
+          url="https://clr-nyyo.onrender.com/rwanda"
         />
       </div>
     </div>
