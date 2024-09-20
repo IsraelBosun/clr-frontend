@@ -108,7 +108,7 @@ const BotswanaScreen = () => {
       <div className="flex w-full justify-center align-center items-center flex-wrap">
         <LineChart
           chartData={ghanaChartData}
-          labels={ghanaChartData.map((_, index) => `Week ${index + 1}`)}
+          labels={ghanaChartData.map((data) => formatDate(data.timestamp))}
           graph={graph}
           className='w-full'
           ref={chartRef}

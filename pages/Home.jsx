@@ -19,6 +19,8 @@ const Home = () => {
     { name: "Sierra Leone", link: "/sierra-leone" },
     { name: "DR Congo", link: "/Congo" },
     { name: "Botswana", link: "/Botswana" },
+    { name: "Mozambique", link: "/Mozambique" },
+
   ];
 
 
@@ -31,7 +33,7 @@ const Home = () => {
         <div className="app">
             {/* <Nav /> */}
           <h1 className="head_text text-center">
-            Subsidiaries CLR Analyzer {" "}
+            Subsidiaries CLR Analyzerrrrr {" "}
             <br className="max-md:hidden *" />
             <span className="orange_gradient text-center">And Monitor</span>
           </h1>

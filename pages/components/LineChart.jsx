@@ -2,8 +2,9 @@ import React from 'react';
 import { Line } from 'react-chartjs-2';
 import 'chart.js/auto';
 import { Chart as ChartJS, Tooltip, Legend, Title, LineElement, CategoryScale, LinearScale, PointElement } from 'chart.js';
+import annotationPlugin from 'chartjs-plugin-annotation';
 
-ChartJS.register(Tooltip, Legend, Title, LineElement, CategoryScale, LinearScale, PointElement);
+ChartJS.register(Tooltip, Legend, Title, LineElement, CategoryScale, LinearScale, PointElement, annotationPlugin);
 
 const LineChart = ({ chartData = [], labels = [], graph = [], chartTitle = '' }) => {
   // Generate datasets for the chart
@@ -71,6 +72,28 @@ const LineChart = ({ chartData = [], labels = [], graph = [], chartTitle = '' })
           font: { size: 14, color: '#444' },
           usePointStyle: true,
           padding: 20,
+        },
+      },
+      annotation: {
+        annotations: {
+          thresholdLine: {
+            type: 'line',
+            yMin: 5,
+            yMax: 5,
+            borderColor: 'red',
+            borderWidth: 2,
+            label: {
+              content: 'Threshold (5)',
+              enabled: true,
+              position: 'end',
+              backgroundColor: 'rgba(255,99,132,0.8)',
+              color: '#FFF',
+              font: {
+                size: 12,
+                weight: 'bold',
+              },
+            },
+          },
         },
       },
     },
