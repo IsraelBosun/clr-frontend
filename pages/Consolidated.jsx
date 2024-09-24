@@ -108,7 +108,7 @@ const DetailsPage = () => {
   }, {});
 
   return (
-    <div className="m-4 mx-12">
+    <div className="m-4 mx-4">
       <h1 className="text-3xl font-bold mb-8 text-center">Consolidated Credit Metrics</h1>
       <div className="overflow-x-auto">
         <table className="min-w-full bg-white border border-gray-300 rounded-lg shadow-md divide-y divide-gray-300">

@@ -127,7 +127,7 @@ const Charts = ({ data = {} }) => { // Set default value to an empty object
           label: function (tooltipItem) {
             const value = tooltipItem.raw;
             const percentage = ((value / totalExposureSum) * 100).toFixed(2);
-            return `${tooltipItem.label}: ${value} (${percentage}%)`;
+            return `${tooltipItem.label}: (${percentage}%)`;
           },
         },
       },
@@ -139,13 +139,13 @@ const Charts = ({ data = {} }) => { // Set default value to an empty object
       <h2 className="text-3xl font-extrabold mb-6 text-center text-gray-700">Credit Metrics Overview</h2>
       <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
         {/* Bar chart for loans overview */}
-        <div className="p-3 border rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300" style={{ height: '500px' }}>
+        <div className="p-2 border rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300" style={{ height: '500px' }}>
           <h3 className="text-xl font-semibold text-center mb-4 text-gray-600">Stages Breakdown</h3>
           <Bar data={chartData} options={barOptions} />
         </div>
 
         {/* Pie chart for total exposures */}
-        <div className="p-3 border rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300" style={{ height: '500px' }}>
+        <div className="p-2 border rounded-lg shadow-lg bg-white hover:shadow-xl transition-shadow duration-300" style={{ height: '500px' }}>
           <h3 className="text-xl font-semibold text-center mb-4 text-gray-600">Total Exposure by Country</h3>
           <Pie data={pieData} options={pieOptions} />
         </div>
