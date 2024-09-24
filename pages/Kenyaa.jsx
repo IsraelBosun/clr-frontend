@@ -1,12 +1,11 @@
 import Head from "next/head";
 import React, { useState, useEffect, useRef } from 'react';
 import FileUploadButton from "./components/UploadButton";
-import { doc, collection, getDocs, addDoc, setDoc } from "firebase/firestore";
+import { doc, collection, getDocs, addDoc, setDoc  } from "firebase/firestore";
 import { db } from './api/api.jsx';
-import CameroonTop5 from "./components/Cameroon/cameroonTop5";
-import CameroonMissedRepayment from "./components/Cameroon/cameroonMissedRepayments";
-import CameroonStage2 from "./components/Cameroon/cameroonStage2";
-import CameroonSector from "./components/Cameroon/cameroonSector";    
+import KenyaTop5 from "./components/Kenya/kenyaTop5";
+import KenyaMissedRepayment from "./components/Kenya/kenyaMissedRepayments";
+import KenyaStage2 from "./components/Kenya/kenyaStage2";
 import MetricCard from './components/MetricCard';
 import 'chart.js/auto';
 import LineChart from './components/LineChart';
@@ -16,7 +15,9 @@ const formatDate = (dateString) => {
   return `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
 };
 
-const CameroonScreen = () => {
+
+
+const KenyaaScreen = () => {
   const [ghanaData, setGhanaData] = useState({});
   const [ghanaChartData, setGhanaChartData] = useState([]);
   const [isTop5Open, setIsTop5Open] = useState(false);
@@ -24,6 +25,10 @@ const CameroonScreen = () => {
   const [isStage2Open, setIsStage2Open] = useState(false);
   const [isSectorOpen, setIsSectorOpen] = useState(false);
   const chartRef = useRef(null);
+
+
+
+
 
   const metrics = [
     { label: 'Stage 1 Loans', key: 'stage1_loans', isNum: true },
@@ -45,13 +50,15 @@ const CameroonScreen = () => {
     { label: 'Stressed NPL', key: "stressedNPL", isPercentage: true },
   ];
 
+
+
   const graph = [
     { label: 'npl', key: 'npl' },
     { label: 'mrr', key: 'mrr' },
   ];
 
   const loadPersistedData = async () => {
-    const querySnapshot = await getDocs(collection(db, "cameroonData"));
+    const querySnapshot = await getDocs(collection(db, "kenyaData"));
     const persistedData = querySnapshot.docs.map(doc => doc.data());
     if (persistedData.length > 0) {
       setGhanaData(persistedData[persistedData.length - 1]);
@@ -68,7 +75,7 @@ const CameroonScreen = () => {
 
     const stressed = (data.stage2_loans + data.stage3_loans) /data.direct_exposure * 100
     console.log(stressed)
-
+    console.log('Hello world')
 
     const relevantData = {
       stage1_loans: data.stage1_loans,
@@ -88,27 +95,33 @@ const CameroonScreen = () => {
       npl: data.npl,
       mrr: data.mrr,
       top5_customers: data.top5_customers,
-      sector_data: data.sector_data,
       top_20_stage2: data.top_20_stage2,
       missed_repayments_data: data.missed_repayments_data,
       stressedNPL: stressed,
       timestamp: new Date().toISOString() // Assuming you want to use the current time as timestamp
     };
 
+
+
+
+
     const updatedChartData = [...ghanaChartData, relevantData];
     setGhanaChartData(updatedChartData);
 
     const now = new Date();
     const timestamp = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()}_${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}`;
-    
+ 
 
-    await setDoc(doc(db, "cameroonData", timestamp), relevantData);
+    await setDoc(doc(db, "kenyaData", timestamp), relevantData);
   };
+
+
+
 
   return (
     <div className="bg-white min-h-screen max-w-6xl mx-auto mt-4 flex flex-col items-center justify-center p-4">
       <div className='flex items-center text-center justify-center font-bold text-neutral-600 text-3xl'>
-        Cameroon's Credit Dashboard
+        Kenya's Credit Dashboard
       </div>
       <div className='absolute top-0 right-0  bg-white text-sm shadow-sm rounded-md border p-2 mb-3'>
       </div>
@@ -157,11 +170,11 @@ const CameroonScreen = () => {
         </button>
         <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
         {isTop5Open && ghanaData.top5_customers && (
-          <CameroonTop5 data={ghanaData.top5_customers} />
+          <KenyaTop5 data={ghanaData.top5_customers} />
         )}
         </div>
 
-        {/* <button
+        <button
           onClick={() => setIsMissedRepaymentsOpen(!isMissedRepaymentsOpen)}
           className="w-full bg-green-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
         >
@@ -182,10 +195,10 @@ const CameroonScreen = () => {
         </button>
         <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
         {isMissedRepaymentsOpen && ghanaData.missed_repayments_data && (
-          <CameroonMissedRepayment data={ghanaData.missed_repayments_data} />
+          <KenyaMissedRepayment data={ghanaData.missed_repayments_data} />
         )}
         </div>
- */}
+
         <button
           onClick={() => setIsStage2Open(!isStage2Open)}
           className="w-full bg-yellow-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
@@ -207,51 +220,20 @@ const CameroonScreen = () => {
         </button>
         <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
         {isStage2Open && ghanaData.top_20_stage2 && (
-          <CameroonStage2 data={ghanaData.top_20_stage2} />
+          <KenyaStage2 data={ghanaData.top_20_stage2} />
         )}
         </div>
-
-        <button
-          onClick={() => setIsSectorOpen(!isSectorOpen)}
-          className="w-full bg-orange-500 text-white rounded-md px-4 py-2 mb-2 text-left flex justify-between items-center w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4"
-        >
-          <span className="uppercase font-bold text-xl">Sector Distribution</span>
-          <svg
-            className={`w-6 h-6 transform transition-transform ${isSectorOpen ? 'rotate-180' : ''}`}
-            xmlns="http://www.w3.org/2000/svg"
-            viewBox="0 0 20 20"
-            fill="currentColor"
-            aria-hidden="true"
-          >
-            <path
-              fillRule="evenodd"
-              d="M6.293 7.293a1 1 0 011.414 0L10 8.586l2.293-1.293a1 1 0 111.414 1.414l-3 3a1 1 0 01-1.414 0l-3-3a1 1 0 010-1.414z"
-              clipRule="evenodd"
-            />
-          </svg>
-        </button>
-        <div className='w-full sm:w-96 md:w-1/2 lg:w-3/4 xl:w-full w-96 overflow-x-auto m-4'>
-        {isSectorOpen && ghanaData.sector_data && (
-          <CameroonSector data={ghanaData.sector_data} />
-        )}
-
-        </div>
-
       <div className='mt-8'>
         <FileUploadButton
           onDataLoaded={handleDataLoaded}
           countryName='Ghana'
           fileType='application/vnd.openxmlformats-officedocument.spreadsheetml.sheet, application/vnd.ms-excel'
           title="Kenya's CLR Analyser"
-          url="https://clr-1.onrender.com/cameroon"
+          url="https://clr-1.onrender.com/kenya"
         />
       </div>
     </div>
   );
 };
 
-export default CameroonScreen;
-
-
-// document id in firebase
-// upload date in chart
+export default KenyaaScreen;

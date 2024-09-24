@@ -25,7 +25,7 @@ const CongoStage2 = ({ data }) => {
       },
       {
         Header: "Total Exposures ($)",
-        accessor: "TOTAL OUSTANDING AMOUNT",
+        accessor: "TOTAL AMOUNT",
         Cell: ({ value }) => formatNumber(value),
       },
     ],
@@ -50,7 +50,7 @@ const CongoStage2 = ({ data }) => {
         "S/N": index + 1,
         "Customer Name": row.CUSTOMER_NAME,
         "Approved Facility Amount ($)": row["APPROVED AMOUNT"],
-        "Total Exposures ($)": row["TOTAL OUSTANDING AMOUNT"],
+        "Total Exposures ($)": row["TOTAL AMOUNT"],
       };
     });
 

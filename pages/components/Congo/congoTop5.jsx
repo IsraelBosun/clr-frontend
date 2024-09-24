@@ -16,7 +16,7 @@ const CongoTop5 = ({ data }) => {
       { Header: 'Customer Name', accessor: 'CUSTOMER_NAME' },
       { Header: 'Sector', accessor: 'SECTOR ' },
       { Header: 'Approved Facility Amount (Limit)', accessor: 'APPROVED AMOUNT', Cell: ({ value }) => formatNumber(value) },
-      { Header: 'Total Exposures (USD)', accessor: 'TOTAL OUSTANDING AMOUNT', Cell: ({ value }) => formatNumber(value) },
+      { Header: 'Total Exposures (USD)', accessor: 'TOTAL AMOUNT', Cell: ({ value }) => formatNumber(value) },
       { Header: 'IFRS', accessor: 'IFRS  CLASSIFICATION' },
       { Header: 'Classification', accessor: 'BANK CLASSIFICATION  AS AT TODAY ' },
     ],

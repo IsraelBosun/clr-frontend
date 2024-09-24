@@ -1,7 +1,7 @@
 import Head from "next/head";
 import React, { useState, useEffect, useRef } from 'react';
 import FileUploadButton from "./components/UploadButton";
-import { collection, getDocs, addDoc } from "firebase/firestore";
+import { doc, collection, getDocs, addDoc, setDoc } from "firebase/firestore";
 import { db } from './api/api.jsx';
 import CongoTop5 from "./components/Congo/congoTop5";
 import CongoMissedRepayment from "./components/Congo/congoMissedRepayments";
@@ -10,6 +10,11 @@ import CongoSector from "./components/Congo/congoSector";
 import MetricCard from './components/MetricCard';
 import 'chart.js/auto';
 import LineChart from './components/LineChart';
+
+const formatDate = (dateString) => {
+  const date = new Date(dateString);
+  return `${String(date.getDate()).padStart(2, '0')}-${String(date.getMonth() + 1).padStart(2, '0')}-${date.getFullYear()}`;
+};
 
 const CongoScreen = () => {
   const [ghanaData, setGhanaData] = useState({});
@@ -37,6 +42,7 @@ const CongoScreen = () => {
     { label: 'WPL', key: 'wpl', isPercentage: true },
     { label: 'NPL', key: 'npl', isPercentage: true },
     { label: 'MRR', key: 'mrr', isPercentage: true },
+    { label: 'Stressed NPL', key: "stressedNPL", isPercentage: true },
   ];
 
   const graph = [
@@ -60,6 +66,9 @@ const CongoScreen = () => {
   const handleDataLoaded = async (data) => {
     setGhanaData(data);
 
+    const stressed = (data.stage2_loans + data.stage3_loans) /data.direct_exposure * 100
+    console.log(stressed)
+
     const relevantData = {
       stage1_loans: data.stage1_loans,
       stage2_loans: data.stage2_loans,
@@ -81,12 +90,18 @@ const CongoScreen = () => {
       sector_data: data.sector_data,
       top_20_stage2: data.top_20_stage2,
       missed_repayments_data: data.missed_repayments_data,
+      stressedNPL: stressed,
+      timestamp: new Date().toISOString() // Assuming you want to use the current time as timestamp
     };
 
     const updatedChartData = [...ghanaChartData, relevantData];
     setGhanaChartData(updatedChartData);
 
-    await addDoc(collection(db, "congoData"), relevantData);
+    const now = new Date();
+    const timestamp = `${String(now.getDate()).padStart(2, '0')}-${String(now.getMonth() + 1).padStart(2, '0')}-${now.getFullYear()}_${String(now.getHours()).padStart(2, '0')}-${String(now.getMinutes()).padStart(2, '0')}-${String(now.getSeconds()).padStart(2, '0')}`;
+
+
+    await setDoc(doc(db, "congoData", timestamp), relevantData);
   };
 
   return (
@@ -99,7 +114,7 @@ const CongoScreen = () => {
       <div className="flex w-full justify-center align-center items-center flex-wrap">
         <LineChart
           chartData={ghanaChartData}
-          labels={ghanaChartData.map((_, index) => `Week ${index + 1}`)}
+          labels={ghanaChartData.map((data) => formatDate(data.timestamp))}
           graph={graph}
           className='w-full'
           ref={chartRef}

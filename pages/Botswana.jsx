@@ -42,6 +42,7 @@ const BotswanaScreen = () => {
     { label: 'WPL', key: 'wpl', isPercentage: true },
     { label: 'NPL', key: 'npl', isPercentage: true },
     { label: 'MRR', key: 'mrr', isPercentage: true },
+    { label: 'Stressed NPL', key: "stressedNPL", isPercentage: true },
   ];
 
   const graph = [
@@ -65,6 +66,10 @@ const BotswanaScreen = () => {
   const handleDataLoaded = async (data) => {
     setGhanaData(data);
 
+    const stressed = (data.stage2_loans + data.stage3_loans) /data.direct_exposure * 100
+    console.log(stressed)
+
+
     const relevantData = {
       stage1_loans: data.stage1_loans,
       stage2_loans: data.stage2_loans,
@@ -86,6 +91,7 @@ const BotswanaScreen = () => {
       sector_data: data.sector_data,
       top_20_stage2: data.top_20_stage2,
       missed_repayments_data: data.missed_repayments_data,
+      stressedNPL: stressed,
       timestamp: new Date().toISOString() // Assuming you want to use the current time as timestamp
     };
 

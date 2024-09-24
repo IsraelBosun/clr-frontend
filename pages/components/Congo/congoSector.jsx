@@ -37,11 +37,11 @@ const CongoSector = ({ data }) => {
   }
 
   // Calculate total outstanding balance
-  const totalOutstandingBalance = data.reduce((total, item) => total + item["TOTAL OUSTANDING AMOUNT"], 0);
+  const totalOutstandingBalance = data.reduce((total, item) => total + item["TOTAL AMOUNT"], 0);
 
   // Add percentage, limit, and difference to the data
   const enhancedData = data.map((item, index) => {
-    const percentage = (item["TOTAL OUSTANDING AMOUNT"] / totalOutstandingBalance) * 100;
+    const percentage = (item["TOTAL AMOUNT"] / totalOutstandingBalance) * 100;
     const limit = sectorLimits[item.SECTOR] || 0;
     console.log(limit, 'this is it')
     const difference = limit - percentage;
@@ -56,7 +56,7 @@ const CongoSector = ({ data }) => {
 
   // Calculate totals for the last row
   const totalApprovedAmount = data.reduce((sum, item) => sum + item["APPROVED AMOUNT"], 0);
-  const totalExposure = data.reduce((sum, item) => sum + item["TOTAL OUSTANDING AMOUNT"], 0);
+  const totalExposure = data.reduce((sum, item) => sum + item["TOTAL AMOUNT"], 0);
   const totalPercentage = enhancedData.reduce((sum, item) => sum + parseFloat(item.percentage), 0);
   const totalLimit = enhancedData.reduce((sum, item) => sum + parseFloat(item.limit), 0);
 
@@ -71,7 +71,7 @@ const CongoSector = ({ data }) => {
       },
       {
         Header: "Total Exposures ($)",
-        accessor: "TOTAL OUSTANDING AMOUNT",
+        accessor: "TOTAL AMOUNT",
         Cell: ({ value }) => formatNumber(value),
       },
       {
@@ -113,7 +113,7 @@ const CongoSector = ({ data }) => {
       "S/N": index + 1,
       "Sector": row.SECTOR,
       "Approved Facility Amount ($)": row["APPROVED AMOUNT"],
-      "Total Exposures ($)": row["TOTAL OUSTANDING AMOUNT"],
+      "Total Exposures ($)": row["TOTAL AMOUNT"],
       "Percentage (%)": row.percentage,
       "Limit (%)": row.limit,
       "Difference (%)": row.difference,

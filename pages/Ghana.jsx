@@ -25,6 +25,10 @@ const GhanaScreen = () => {
   const [isSectorOpen, setIsSectorOpen] = useState(false);
   const chartRef = useRef(null);
 
+
+
+
+
   const metrics = [
     { label: 'Stage 1 Loans', key: 'stage1_loans', isNum: true },
     { label: 'Stage 2 Loans', key: 'stage2_loans', isNum: true },
@@ -42,7 +46,10 @@ const GhanaScreen = () => {
     { label: 'WPL', key: 'wpl', isPercentage: true },
     { label: 'NPL', key: 'npl', isPercentage: true },
     { label: 'MRR', key: 'mrr', isPercentage: true },
+    { label: 'Stressed NPL', key: "stressedNPL", isPercentage: true },
   ];
+
+
 
   const graph = [
     { label: 'npl', key: 'npl' },
@@ -65,6 +72,9 @@ const GhanaScreen = () => {
   const handleDataLoaded = async (data) => {
     setGhanaData(data);
 
+    const stressed = (data.stage2_loans + data.stage3_loans) /data.direct_exposure * 100
+    console.log(stressed)
+
     const relevantData = {
       stage1_loans: data.stage1_loans,
       stage2_loans: data.stage2_loans,
@@ -86,8 +96,13 @@ const GhanaScreen = () => {
       sector_data: data.sector_data,
       top_20_stage2: data.top_20_stage2,
       missed_repayments_data: data.missed_repayments_data,
+      stressedNPL: stressed,
       timestamp: new Date().toISOString() // Assuming you want to use the current time as timestamp
     };
+
+
+
+
 
     const updatedChartData = [...ghanaChartData, relevantData];
     setGhanaChartData(updatedChartData);
@@ -98,6 +113,9 @@ const GhanaScreen = () => {
 
     await setDoc(doc(db, "ghanaData", timestamp), relevantData);
   };
+
+
+
 
   return (
     <div className="bg-white min-h-screen max-w-6xl mx-auto mt-4 flex flex-col items-center justify-center p-4">

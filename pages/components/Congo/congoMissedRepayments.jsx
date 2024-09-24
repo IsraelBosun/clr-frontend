@@ -26,7 +26,7 @@ const CongoMissedRepayment = ({ data }) => {
       },
       {
         Header: "Total Exposures ($)",
-        accessor: "TOTAL OUSTANDING AMOUNT",
+        accessor: "TOTAL AMOUNT",
         Cell: ({ value }) => formatNumber(value),
       },
       {
@@ -57,7 +57,7 @@ const CongoMissedRepayment = ({ data }) => {
         "Customer Name": row.CUSTOMER_NAME,
         "Sector": row.SECTOR,
         "Approved Facility Amount ($)": row["APPROVED AMOUNT"],
-        "Total Exposures ($)": row["TOTAL OUSTANDING AMOUNT"],
+        "Total Exposures ($)": row["TOTAL AMOUNT"],
         "Missed Installment ($)": row["TOTAL UNPAID"],
       };
     });

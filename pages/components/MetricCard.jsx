@@ -7,6 +7,7 @@ const MetricCard = ({ title, value, isPercentage, metricKey, isNum }) => {
     if (metricKey === 'stage2_loans') return 'text-yellow-400';
     if (metricKey === 'stage3_loans') return 'text-red-600';
     if (metricKey === 'npl') return 'text-red-600';
+    if (metricKey === 'stressedNPL') return 'text-red-600';
     return isPercentage ? 'text-blue-600' : 'text-gray-800';
   };
 
