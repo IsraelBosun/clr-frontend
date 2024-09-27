@@ -17,6 +17,7 @@
     "leaflet": "^1.9.4",
     "mapbox-gl": "^3.6.0",
     "next": "^14.1.0",
+    "nodemailer": "^6.9.15",
     "pigeon-maps": "^0.21.6",
     "pigeon-marker": "^0.3.4",
     "react": "^18.2.0",

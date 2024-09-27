@@ -26,6 +26,7 @@ mapboxgl.accessToken = 'pk.eyJ1IjoiaXNyYWVsYm9zdW4iLCJhIjoiY20weGh1OGYyMGM2NzJrc
 const KenyaMap = () => {
   const mapContainer = useRef(null); // Reference for the map container
   const [map, setMap] = useState(null);
+  const [hoveredCountryPopup, setHoveredCountryPopup] = useState(null); // Track the current popup
   const router = useRouter();
 
   const countries = [
@@ -45,7 +46,6 @@ const KenyaMap = () => {
     { name: "Zambia", link: "/Zambia" },
     { name: "Consolidated", link: "/Consolidated" },
   ];
-  
 
   useEffect(() => {
     if (mapContainer.current && !map) {
@@ -83,10 +83,10 @@ const KenyaMap = () => {
         { name: 'Guinea', data: guineaGeoJson },
         { name: 'South Africa', data: southAfricaGeoJson },
         { name: 'Sierra Leone', data: sierraLeoneGeoJson },
-        { name: 'Cameroon', data: cameroonGeoJson},
-        { name: 'Tanzania', data: tanzaniaGeoJson},
-        { name: 'Zambia', data: zambiaGeoJson},
-        { name: 'Mozambique', data: mozambiqueGeoJson}
+        { name: 'Cameroon', data: cameroonGeoJson },
+        { name: 'Tanzania', data: tanzaniaGeoJson },
+        { name: 'Zambia', data: zambiaGeoJson },
+        { name: 'Mozambique', data: mozambiqueGeoJson }
       ];
 
       countriesData.forEach(({ name, data }, index) => {
@@ -119,23 +119,32 @@ const KenyaMap = () => {
             source: name,
             layout: {},
             paint: {
-              'line-color': '#000',
-              'line-width': 2,
+              'line-color': '#2F4F4F',
+              'line-width': 1,
             },
           });
 
           // Handle hover to show the tooltip
           map.on('mouseenter', name, (e) => {
             map.getCanvas().style.cursor = 'pointer';
-            new mapboxgl.Popup()
+
+            // Remove existing popup if it exists
+            if (hoveredCountryPopup) hoveredCountryPopup.remove();
+
+            // Create new popup
+            const newPopup = new mapboxgl.Popup()
               .setLngLat(e.lngLat)
               .setHTML(`<strong>${name}</strong>`)
               .addTo(map);
+
+            // Track the new popup
+            setHoveredCountryPopup(newPopup);
           });
 
-          // Reset cursor on mouse leave
+          // Reset cursor and remove popup on mouse leave
           map.on('mouseleave', name, () => {
             map.getCanvas().style.cursor = '';
+            if (hoveredCountryPopup) hoveredCountryPopup.remove();
           });
 
           // Handle click to navigate to the country page
@@ -146,7 +155,7 @@ const KenyaMap = () => {
         });
       });
     }
-  }, [map]);
+  }, [map, hoveredCountryPopup]);
 
   return (
     <div className="w-full h-screen">
@@ -166,17 +175,16 @@ const KenyaMap = () => {
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-2 md:flex md:flex-wrap justify-center gap-4 p-6">
-  {countries.map((country, index) => (
-    <a
-      key={index}
-      href={country.link}
-      className="w-full sm:w-auto px-4 py-2 rounded-lg text-white font-bold text-lg 
-        bg-green-600 hover:bg-green-700"
-    >
-      {country.name}
-    </a>
-  ))}
-</div>
+          {countries.map((country, index) => (
+            <a
+              key={index}
+              href={country.link}
+              className="w-full sm:w-auto px-4 py-2 rounded-lg text-white font-bold text-lg bg-green-600 hover:bg-green-700"
+            >
+              {country.name}
+            </a>
+          ))}
+        </div>
 
         <div className="flex justify-center mt-6 items-center h-screen">
           {/* Mapbox map container */}

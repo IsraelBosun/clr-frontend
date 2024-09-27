@@ -11,50 +11,22 @@ const formatNumber = (number) => {
 
 // Limits for each sector
 const sectorLimits = {
-  AGRICULTURE: 0.0,
-  CEMENT: 2.5,
-  CONSTRUCTION: 1.85,
-  MINING: 13.87,
-  EDUCATION: 0.0,
-  "FINANCIAL INSTITUTION": 0.0,
-  "GENERAL COMMERCE": 16.91,
-  GOVERNMENT: 0.0,
-  "TELECOMS & COMMUNICATION": 10.16,
-  MANUFACTURING: 11.72,
-  "OIL & GAS": 29.22,
-  "POWER & ENERGY": 0.0,
-  RETAIL: 3.33,
-  SERVICES: 2.62,
-  "TRANSPORTATION & STORAGE": 7.83,
+  "AGRICULTURE": 4.14,
+  "CEMENT": 11.20,
+  "CONSTRUCTION": 15.44,
+  "MINING": 43.00,
+  "EDUCATION": 0.00,
+  "FINANCIAL INSTITUTION": 4.14,
+  "GENERAL COMMERCE ": 39.28,
+  "GOVERNMENT": 0.00,
+  "TELECOMS & COMMUNICATION": 18.52,
+  "MANUFACTURING": 32.00,
+  "OIL & GAS": 30.00,
+  "POWER & ENERGY": 0.00,
+  "RETAIL  ": 12.41,
+  "RETAIL SMEs": 6.20,
+  "TRANSPORTATION & STORAGE": 19.39
 };
-
-// const GuineaSector = ({ data }) => {
-//   if (!data) {
-//     return <div className="p-4">No data available</div>;
-//   }
-
-//   // Calculate total outstanding balance
-//   const totalOutstandingBalance = data.reduce((total, item) => total + item["CURRENT EXPOSURE (USD)"], 0);
-
-//   // Add percentage, limit, and difference to the data
-//   const enhancedData = data.map((item, index) => {
-//     const percentage = (item["CURRENT EXPOSURE (USD)"] / totalOutstandingBalance) * 100;
-
-//     // Extract the first word using regex
-//     const firstWord = item.SECTOR.trim().match(/^\w+/i)?.[0] || "";
-
-//     // Find the sector limit using the first word
-//     const limit = Object.keys(sectorLimits).find(key => key.toUpperCase().startsWith(firstWord.toUpperCase())) || 0;
-
-//     const difference = sectorLimits[limit] ? sectorLimits[limit] - percentage : 0;
-
-//     return {
-//       ...item,
-//       serialNo: index + 1,
-//       percentage: percentage.toFixed(2),
-//       limit: limit ? sectorLimits[limit].toFixed(2) : 'N/A',
-//       difference: difference.toFixed(2),
-//     };
 
 const GuineaSector = ({ data }) => {
   if (!data) {
@@ -69,9 +41,12 @@ const GuineaSector = ({ data }) => {
 
   // Add percentage, limit, and difference to the data
   const enhancedData = data.map((item, index) => {
+    console.log(data)
+    const sectorKey = item["SECTOR ADJ"]
+    console.log(sectorKey)
     const percentage =
       (item["CURRENT EXPOSURE (USD)"] / totalOutstandingBalance) * 100;
-    const limit = sectorLimits[item.SECTOR] || 0;
+    const limit = sectorLimits[sectorKey] || 0;
     console.log(limit, "this is it");
     const difference = limit - percentage;
     return {

@@ -11,24 +11,20 @@ const formatNumber = (number) => {
 
 // Limits for each sector
 const sectorLimits = {
-  AGRICULTURE: 5.46,
-  GOVERNMENT: 9.60,
-  "COCOA TRADING-Direct": 10.80,
-  "COCOA TRADING-Guarantee Line": 7.52,
-  "CONSTRUCTION & REAL ESTATE": 9.86,
-  CONTRACTORS: 10.45,
-  EDUCATION: 2.63,
-  "FINANCIAL INSTITUTION": 1.20,
-  "GENERAL COMMERCE": 30.00,
-  "INFORMATION & COMMUNICATION": 1.26,
-  MANUFACTURING: 22.30,
-  "OIL & GAS": 3.54,
-  OTHERS: 1.08,
-  "POWER & ENERGY": 4.43,
-  MINING: 1.20,
-  RETAIL: 4.81,
-  SERVICES: 13.74,
-  "TRANSPORTATION & STORAGE": 10.88,
+  "ADMINISTRATIVE AND SUPPORT SERVICE ACTIVITIES": 0.24,
+  "CONSTRUCTION": 17.80,
+  "EDUCATION": 7.74,
+  "GENERAL": 14.46,
+  "GENERAL COMMERCE": 18.00,
+  "GOVERNMENT": 4.92,
+  "HUMAN HEALTH": 0.24,
+  "INFORMATION AND COMMUNICATION": 5.10,
+  "MANUFACTURING": 9.30,
+  "MINING": 29.60,
+  "OIL AND GAS": 17.52,
+  "PROFESSIONAL, SCIENTIFIC AND TECHNICAL ACTIVITIES": 2.40,
+  "TELECOMMUNICATION": 10.40,
+  "TRANSPORTATION AND STORAGE": 12.60
 };
 
 const CongoSector = ({ data }) => {
@@ -38,11 +34,13 @@ const CongoSector = ({ data }) => {
 
   // Calculate total outstanding balance
   const totalOutstandingBalance = data.reduce((total, item) => total + item["TOTAL AMOUNT"], 0);
-
+console.log(data, 'this is data')
   // Add percentage, limit, and difference to the data
   const enhancedData = data.map((item, index) => {
+    console.log(item, 'this is item')
+    const sectorKey = item["SECTOR "].trim()
     const percentage = (item["TOTAL AMOUNT"] / totalOutstandingBalance) * 100;
-    const limit = sectorLimits[item.SECTOR] || 0;
+    const limit = sectorLimits[sectorKey] || 0;
     console.log(limit, 'this is it')
     const difference = limit - percentage;
     return {

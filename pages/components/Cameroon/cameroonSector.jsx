@@ -11,24 +11,25 @@ const formatNumber = (number) => {
 
 // Limits for each sector
 const sectorLimits = {
-  AGRICULTURE: 5.46,
-  GOVERNMENT: 9.60,
-  "COCOA TRADING-Direct": 10.80,
-  "COCOA TRADING-Guarantee Line": 7.52,
-  "CONSTRUCTION & REAL ESTATE": 9.86,
-  CONTRACTORS: 10.45,
-  EDUCATION: 2.63,
-  "FINANCIAL INSTITUTION": 1.20,
-  "GENERAL COMMERCE": 30.00,
-  "INFORMATION & COMMUNICATION": 1.26,
-  MANUFACTURING: 22.30,
-  "OIL & GAS": 3.54,
-  OTHERS: 1.08,
-  "POWER & ENERGY": 4.43,
-  MINING: 1.20,
-  RETAIL: 4.81,
-  SERVICES: 13.74,
-  "TRANSPORTATION & STORAGE": 10.88,
+  "Agriculture": 8.6,
+  "Government": 0.0,
+  "Cocoa trading": 35.0,
+  "Construction & Real Estate": 13.8,
+  "Cement": 25.0,
+  "Financial Institution": 0.0,
+  "General Business": 25.0,
+  "Metals": 0.0,
+  "Telecom": 35.0,
+  "Manufacturing": 35.0,
+  "Oil & Gas": 22.0,
+  "Power & Energy": 7.8,
+  "Retail": 18.7,
+  "Service Delivery": 16.2,
+  "Pharmaceutical": 4.7,
+  "Transport & Logistics": 60.0,
+  "Wood Processing and Distribution": 7.8,
+  "Fintech": 0.0,
+  "Brewery": 10.0
 };
 
 const CameroonSector = ({ data }) => {
@@ -41,9 +42,12 @@ const CameroonSector = ({ data }) => {
 
   // Add percentage, limit, and difference to the data
   const enhancedData = data.map((item, index) => {
+    console.log(item, 'this is item')
+    console.log([item["SECTOR "] ], 'CHECK HERE')
     const percentage = (item["OUTSANDING BALANCE USD"] / totalOutstandingBalance) * 100;
     const limit = sectorLimits[item.SECTOR] || 0;
     console.log(limit, 'this is it')
+    console.log(sectorLimits[item.sector])
     const difference = limit - percentage;
     return {
       ...item,
